@@ -1,0 +1,81 @@
+header{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+header svg {
+  fill: var(--secondary-color);
+  width: 28px;
+  height: 28px;
+  transition: fill 0.3s ease;
+}
+
+header svg:hover {
+  fill: var(--primary-color);
+}
+
+.custom-badge .mat-badge-content {
+  width: 24px;
+  height: 24px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: 1px solid black;
+}
+
+.divider {
+  color: #c1c1c1;
+  background-color: #e4ebf3;
+  width: 1px;
+  height: 32px;
+  margin-top: 6px;
+}
+
+.desktop-nav-item {
+  font-size: 18px;
+  position: relative;
+  padding-bottom: 4px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.desktop-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.desktop-nav-item:hover {
+  color: var(--primary-color);
+}
+
+.desktop-nav-item:hover::after {
+  width: 100%;
+}
+
+.mobile-nav-item {
+  font-size: 18px;
+  padding-bottom: 4px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.mobile-nav-item:hover {
+  color: var(--primary-color);
+}

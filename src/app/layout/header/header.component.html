@@ -1,0 +1,75 @@
+<header>
+    <input type="checkbox" id="menu-toggle" class="hidden peer" />
+    <div class="container mx-auto flex items-center justify-between p-2">
+        <div class="flex items-center gap-10">
+            <div class="flex items-center gap-2 cursor-pointer">
+                <img src="logo.ico" alt="logo" class="w-10 h-10" />
+                <a class="text-2xl font-semibold text-gray-800">ScriptedSky</a>
+            </div>
+
+            <nav class="hidden md:flex gap-10">
+                <a routerLink="/" routerLinkActive="active" class="desktop-nav-item">Home</a>
+                <a routerLink="/shop" routerLinkActive="active" class="desktop-nav-item">Books</a>
+                <a class="desktop-nav-item">Contacts</a>
+            </nav>
+
+        </div>
+
+        <div class="flex items-center gap-2">
+            <a class="hidden md:flex cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z" /></svg>
+            </a>
+            <div class="hidden md:flex divider"></div>
+
+            <a matBadge="20" matBadgeSize="large" class="custom-badge cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"> <path d="M240-80q-33 0-56.5-23.5T160-160v-480q0-33 23.5-56.5T240-720h80q0-66 47-113t113-47q66 0 113 47t47 113h80q33 0 56.5 23.5T800-640v480q0 33-23.5 56.5T720-80H240Zm0-80h480v-480h-80v80q0 17-11.5 28.5T600-520q-17 0-28.5-11.5T560-560v-80H400v80q0 17-11.5 28.5T360-520q-17 0-28.5-11.5T320-560v-80h-80v480Zm160-560h160q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720ZM240-160v-480 480Z" /></svg>
+            </a>
+
+            <div class="md:hidden divider"></div>
+            <label for="menu-toggle" class="md:hidden cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                    <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+                </svg>
+            </label>
+        </div>
+    </div>
+
+    <div class="fixed top-0 left-0 h-full w-64 bg-[#f6f6fc] shadow-lg -translate-x-full peer-checked:translate-x-0 transition-transform duration-300 z-50 p-6 flex flex-col gap-4">
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer">
+                <img src="logo.ico" alt="logo" class="w-8 h-8" />
+                <a class="text-xl font-semibold text-gray-800">ScriptedSky</a>
+            </div>
+            <label for="menu-toggle" class="cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </label>
+        </div>
+        <a routerLink="/" routerLinkActive="active" class="mobile-nav-item">Home</a>
+        <a routerLink="/shop" routerLinkActive="active" class="mobile-nav-item">Books</a>
+        <a class="mobile-nav-item">Contacts</a>
+
+        <div class="mt-auto">
+            <div class="pt-4 border-t border-gray-300">
+                <div class="flex items-center gap-2">
+                    <img src="person-reading-a-book-icon-vector.jpg" alt="User avatar" class="w-10 h-10 rounded-full" />
+                    <div>
+                        <p class="text-base font-semibold text-gray-800">User Name</p>
+                        <a class="text-base text-blue-600 hover:underline cursor-pointer">Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-4 border-t border-gray-300 flex gap-3">
+                
+                <button class="w-full py-2 px-4 text-sm text-white bg-blue-600 rounded hover:bg-blue-700">Login</button>
+                <button class="w-full py-2 px-4 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50">Register</button>
+            </div>
+        </div>
+        
+
+    </div>
+
+    <label for="menu-toggle" class="hidden peer-checked:block fixed inset-0 bg-black/40 z-40 cursor-pointer"></label>
+
+</header>

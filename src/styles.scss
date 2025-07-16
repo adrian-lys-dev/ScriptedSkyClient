@@ -1,0 +1,13 @@
+:root {
+  --secondary-color: #01001a;
+  --primary-color: #0160ff;
+  --white-color: white;
+  --title-color: #1b3764;
+  --main-bg: rgba(240,245,249,255)
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  background-color: var(--main-bg)
+}
