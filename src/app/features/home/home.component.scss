@@ -1,0 +1,29 @@
+.hero-btn {
+    background-color: var(--primary-color);
+    color: var(--color-white);
+}
+
+.hero-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.features-btn {
+    background-color: var(--main-bg);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.features-btn svg {
+    fill: var(--secondary-color);
+}
+
+.features-btn:hover {
+    background-color: var(--primary-color);
+}
+
+.features-btn:hover svg {
+    fill: var(--color-white);
+}
+
+.card-hover:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
