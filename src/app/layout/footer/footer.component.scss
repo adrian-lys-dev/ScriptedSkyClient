@@ -1,0 +1,21 @@
+.footer-nav {
+    color: var(--secodanry-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.footer-nav:hover {
+    color: var(--primary-color);
+}
+
+.social {
+    transition: color 0.3s ease;
+}
+
+.social:hover {
+    background-color: var(--primary-color);
+}
+
+.social:hover svg {
+    fill: var(--color-white);
+}
