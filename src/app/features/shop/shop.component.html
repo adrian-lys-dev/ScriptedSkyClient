@@ -1,0 +1,33 @@
+@if (books) {
+  <div class="container mx-auto flex flex-col gap-3">
+    <main class="container flex flex-col gap-3">
+        <div class="all-product-subtitle text-4xl font-extrabold text-gray-900 w-full lg:w-1/5 hidden lg:block">
+            Catalog Books
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="lg:col-span-3">
+            <!-- Your content -->
+            <div class="w-fit mx-auto grid grid-cols-1
+               2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 xs:grid-cols-2
+               justify-items-center justify-center gap-y-5 gap-x-10 mb-5 p-6">
+
+               @if (books.data.length > 0) {
+                @for (book of books.data; track book.id) {
+                  <app-book-item [book]="book"></app-book-item>
+                }
+              } @else {
+                <div class="flex flex-col items-center justify-center w-full col-span-full">
+                  <img src="empty_state.png" alt="No books found" class="w-64 md:w-80 lg:w-96 max-w-full h-auto">
+                  <p class="text-center text-gray-600 text-lg mt-4">No books found.</p>
+                  <p class="text-center text-gray-600 text-sm mt-4">Maybe try other filters?</p>
+                </div>                      
+              }
+        
+            </div>
+
+          </div>
+        </div>
+    </main>
+</div>
+}

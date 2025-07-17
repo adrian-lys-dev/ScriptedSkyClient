@@ -1,0 +1,19 @@
+@if (book) {
+  <div class="w-60 2xl:w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-95 hover:shadow-xl">
+    <img routerLink="/shop/{{book.id}}" src="{{book.pictureURL}}" alt="Product" class="h-80 w-72 object-contain rounded-t-xl mt-1 cursor: cursor-pointer" />
+    <div class="px-4 py-3">
+      <span class="text-gray-400 mr-3 uppercase text-xs">
+        {{book.authorNames}}
+      </span>
+
+      <p routerLink="/shop/{{book.id}}" class="text-lg font-bold text-black truncate block capitalize cursor: cursor-pointer">{{book.title}}</p>
+
+      <div class="flex items-center">
+        <p class="all-product-subtitle text-lg font-semibold text-black cursor-auto my-3">{{book.price}}₴</p>
+        <button class="ml-auto">
+          <mat-icon class="hover:text-primary">add_shopping_cart</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+}
