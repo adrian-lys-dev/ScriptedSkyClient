@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Pagination } from '../../shared/models/pagination';
 import { CatalogBook } from '../../shared/models/catalogBook';
 import { ShopParams } from '../../shared/models/shopParams';
+import { FilteringItems } from '../../shared/models/filteringItems';
 
 @Injectable({
   providedIn: 'root'
@@ -45,4 +46,17 @@ export class ShopService {
 
     return this.http.get<Pagination<CatalogBook>>(this.baseUrl + 'book', { params });
   }
+
+  getGenres() {
+    return this.http.get<FilteringItems[]>(this.baseUrl + 'filtering/genre');
+  }
+
+  getAuthors() {
+    return this.http.get<FilteringItems[]>(this.baseUrl + 'filtering/author')
+  }
+
+  getPublishers() {
+    return this.http.get<FilteringItems[]>(this.baseUrl + 'filtering/publisher')
+  }
+
 }
