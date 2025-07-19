@@ -20,11 +20,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           }
           throw modelStateErrors.flat();
         } else {
-          snackbar.error(err.error.title || err.error);
+          snackbar.error(err.error.message);
         }
       }
       if (err.status === 401) {
-        snackbar.error(err.error.title || err.error);
+        snackbar.error(err.error.message);
       }
       if (err.status === 403) {
         snackbar.error('Forbidden');

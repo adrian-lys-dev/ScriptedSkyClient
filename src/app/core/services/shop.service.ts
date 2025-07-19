@@ -4,6 +4,7 @@ import { Pagination } from '../../shared/models/pagination';
 import { CatalogBook } from '../../shared/models/catalogBook';
 import { ShopParams } from '../../shared/models/shopParams';
 import { FilteringItems } from '../../shared/models/filteringItems';
+import { Book } from '../../shared/models/book';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class ShopService {
     params = params.append('pageIndex', shopParams.PageNumber);
 
     return this.http.get<Pagination<CatalogBook>>(this.baseUrl + 'book', { params });
+  }
+
+  getBook(id: number) {
+    return this.http.get<Book>(this.baseUrl + 'book/' + id);
   }
 
   getGenres() {
