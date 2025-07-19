@@ -50,7 +50,7 @@ export class ShopComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.shopParams.PageNumber = +params['page'] || 1;
-      this.shopParams.PageSize = +params['pageSize'] || 10;
+      this.shopParams.PageSize = +params['pageSize'] || 8;
       this.shopParams.sort = params['sort'] || '';
 
       this.selectedIdGenres = params['genres'] ? params['genres'].split(',') : [];
