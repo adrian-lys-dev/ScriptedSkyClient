@@ -1,37 +1,38 @@
 @if (books) {
 <div class="container mx-auto">
   <main class="container flex flex-col">
-    <div class="grid grid-cols-1 lg:grid-cols-5 flex-col sm:flex-row justify-between items-start lg:items-center xl:gap-10">
-
-
-      <!-- Right Section & Title -->
+    <div class="grid grid-cols-1 lg:grid-cols-5 items-center lg:gap-6">
+      <!-- Название занимает 1 колонку -->
       <div class="col-span-1">
-        <div class="all-product-subtitle text-4xl lg:text-3xl xl:text-4xl font-extrabold whitespace-nowrap">
+        <h1 class="all-product-subtitle text-4xl lg:text-3xl xl:text-4xl font-extrabold whitespace-nowrap">
           Catalog Books
-        </div>
+        </h1>
       </div>
 
-      <!-- Left Section & Search, Sorting, Mobile Filtering -->
-      <div class="col-span-4 flex items-center justify-between gap-2 lg:pl-6 xl:pl-0">
-
-        <!-- Search -->
-        <div class="relative w-full">
-          <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="flex">
-            <input type="search"
-              class="pl-3 py-2 border border-gray-300 rounded-lg w-full text-sm text-gray-900"
-              placeholder="Search" name="search" [(ngModel)]="shopParams.search"/>
-
-            <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+      <!-- Поиск и другие элементы занимают 4 колонки -->
+      <div class="col-span-4 flex items-center justify-between gap-2">
+        <!-- Поиск -->
+        <div class="relative w-full max-w-full">
+          <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="flex w-full">
+            <input type="search" class="pl-3 py-2 border border-gray-300 rounded-lg w-full text-sm text-gray-900"
+              placeholder="Search" name="search" [(ngModel)]="shopParams.search" />
+            <button type="submit"
+              class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer">
+              <!-- SVG иконка поиска -->
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="currentColor">
+                <path
+                  d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+              </svg>
             </button>
           </form>
         </div>
-        
-        <!-- Sorting -->
-        <div class="flex relative">
-          <button id="sortButton" (click)="toggleDropdown()" class="flex hover:text-gray-900">
+
+        <!-- Сортировка -->
+        <div class="relative">
+          <button id="sortButton" (click)="toggleDropdown()" class="flex hover:text-gray-900 items-center">
             Sort
-            <svg class="ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor"
+            <svg class="ml-1 w-5 h-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor"
               aria-hidden="true" data-slot="icon">
               <path fill-rule="evenodd"
                 d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
@@ -39,103 +40,102 @@
             </svg>
           </button>
 
-          <!-- Sorting dropdown list -->
-          <div *ngIf="isOpen" id="dropdown" 
-              class="origin-top-right absolute right-0 top-full mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+          <div *ngIf="isOpen" id="dropdown"
+            class="origin-top-right absolute right-0 top-full mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
             <div class="py-1">
-              <a *ngFor="let sort of sortOptions" 
-                (click)="onSortChange(sort.value)" 
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
-                {{sort.name}}
-              </a>
+              <a *ngFor="let sort of sortOptions" (click)="onSortChange(sort.value)"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">{{ sort.name }}</a>
             </div>
           </div>
         </div>
 
-
+        <!-- Кнопка фильтров для мобильных -->
         <button class="hover:text-gray-500 lg:hidden" (click)="toggleFilters()">
-          <svg class="size-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
-            <path fill-rule="evenodd" d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z" clip-rule="evenodd" />
+          <svg class="w-5 h-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
+            <path fill-rule="evenodd"
+              d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z"
+              clip-rule="evenodd" />
           </svg>
         </button>
-
       </div>
-
     </div>
+
 
     <section class="pb-24">
       <div class="grid grid-cols-1 lg:grid-cols-5">
 
         <!-- Filters -->
-        <div class="hidden lg:block lg:col-span-1">
+        <div class="hidden lg:block lg:col-span-1 pr-4">
           <div class="flex items-center justify-between pb-2">
             <h2>Filters</h2>
-            <button (click)="resetFilters()" class=" hover:text-gray-600">
-              <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M6 18 17.94 6M18 18 6.06 6" />
-              </svg>
-            </button>
+              <button (click)="resetFilters()" class="group hover:text-gray-600 cursor-pointer">
+                <svg class="w-6 h-6 transition-transform duration-300 group-hover:rotate-90"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18 17.94 6M18 18 6.06 6" />
+                </svg>
+              </button>
           </div>
 
           <div class="space-y-2">
-            <app-filter *ngIf="genres.length > 0" filterName="Genres" [filterOptions]="genres" [selectedIds]="selectedIdGenres"
-              (selectionChange)="onSelectionChange($event, 'selectedIdGenres')">
+            <app-filter *ngIf="genres.length > 0" filterName="Genres" [filterOptions]="genres"
+              [selectedIds]="selectedIdGenres" (selectionChange)="onSelectionChange($event, 'selectedIdGenres')">
             </app-filter>
-          
+
             <app-filter *ngIf="authors.length > 0" filterName="Authors" [filterOptions]="authors"
               [selectedIds]="selectedIdAuthors" (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')">
             </app-filter>
-          
+
             <app-filter *ngIf="publishers.length > 0" filterName="Publishers" [filterOptions]="publishers"
-              [selectedIds]="selectedIdPublishers" (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')">
+              [selectedIds]="selectedIdPublishers"
+              (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')">
             </app-filter>
 
             <!-- Filtreing Btns -->
             <div class="flex">
-              <button (click)="applyFilters()" class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
+              <button (click)="applyFilters()"
+                class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center p-2 cursor-pointer">
                 Apply Filters
-                <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-                </svg>  
-              </button>              
-            </div> 
-          
+                <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5 11.917 9.724 16.5 19 7.5" />
+                </svg>
+              </button>
+            </div>
+
           </div>
         </div>
 
         <!-- Books Grid -->
-        <div class="lg:col-span-4">
-            <div class="w-fit mx-auto 
-              grid
-              grid-cols-2
-              xs:grid-cols-2
-              sm:grid-cols-2
-              md:grid-cols-3
-              lg:grid-cols-3
-              xl:grid-cols-4
-              2xl:grid-cols-4
-              justify-items-center justify-center gap-y-5 gap-x-20 sm:gap-x-10 mb-5 p-6">
-        
-              @if (books.data.length > 0) {
-              @for (book of books.data; track book.id) {
-              <app-book-item [book]="book"></app-book-item>
-              }
-              } @else {
-              <div class="flex flex-col items-center justify-center w-full col-span-full">
-                <img src="empty_state.png" alt="No books found" class="w-64 md:w-80 lg:w-96 max-w-full h-auto">
-                <p class="text-center text-gray-600 text-lg mt-4">No books found.</p>
-                <p class="text-center text-gray-600 text-sm mt-4">Maybe try other filters?</p>
-              </div>
-              }
-        
+        <section class="lg:col-span-4 mt-2">
+
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-4">
+            @if (books.data.length > 0) {
+            @for (book of books.data; track book.id) {
+            <app-book-item [book]="book"></app-book-item>
+            }
+            } @else {
+            <div class="flex flex-col items-center justify-center w-full col-span-full">
+              <img src="empty_state.png" alt="No books found" class="w-64 md:w-80 lg:w-96 max-w-full h-auto">
+              <p class="text-center text-gray-600 text-lg mt-4">No books found.</p>
+              <p class="text-center text-gray-600 text-sm mt-4">Maybe try other filters?</p>
+            </div>
+            }
+
           </div>
-        </div>
+        </section>
+
 
       </div>
     </section>
-    
+
+
+
   </main>
+
 </div>
+
+
 }

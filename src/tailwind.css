@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --breakpoint-xs: 480px;
+  --breakpoint-xs: 340px;
+
+  --color-primary: #0160ff;
+  --color-secondary: #01001a;
+  --color-white: #ffffff;
+  --color-title: #1b3764;
+  --color-card-body: #f4f8ff;
+  --color-primary-hover: #6c9df3;
 }

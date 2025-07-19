@@ -1,19 +1,36 @@
 @if (book) {
-  <div class="w-60 2xl:w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-95 hover:shadow-xl">
-    <img routerLink="/shop/{{book.id}}" src="{{book.pictureURL}}" alt="Product" class="h-80 w-72 object-contain rounded-t-xl mt-1 cursor: cursor-pointer" />
-    <div class="px-4 py-3">
-      <span class="text-gray-400 mr-3 uppercase text-xs">
-        {{book.authorNames}}
-      </span>
+  <article
+    class="bg-white rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-95 overflow-hidden flex flex-col">
+    
+    <!-- Picture с aspect ratio -->
+    <div class="relative w-full aspect-[3/4] overflow-hidden">
+      <img routerLink="/shop/{{book.id}}"
+           src="{{book.pictureURL}}"
+           alt="{{book.title}}"
+           class="w-full h-full object-contain cursor-pointer" />
+    </div>
 
-      <p routerLink="/shop/{{book.id}}" class="text-lg font-bold text-black truncate block capitalize cursor: cursor-pointer">{{book.title}}</p>
+    <!-- Cart Content -->
+    <div class="p-4 flex flex-col flex-grow">
+      <!-- Author -->
+      <span class="text-gray-400 text-xs uppercase mb-1 truncate">{{book.authorNames}}</span>
 
-      <div class="flex items-center">
-        <p class="all-product-subtitle text-lg font-semibold text-black cursor-auto my-3">{{book.price}}₴</p>
+      <!-- Title -->
+      <p routerLink="/shop/{{book.id}}"
+         class="text-base font-semibold text-black truncate mb-2 cursor-pointer hover:text-title duration-200">
+        {{book.title}}
+      </p>
+
+      <!-- Price and shopping cart -->
+      <div class="flex items-center mt-auto">
+        <p class="all-product-subtitle text-lg font-bold text-black">{{book.price}}₴</p>
         <button class="ml-auto">
-          <mat-icon class="hover:text-primary">add_shopping_cart</mat-icon>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed" class="cursor-pointer fill-black hover:fill-primary duration-200">
+            <path
+              d="M440-600v-120H320v-80h120v-120h80v120h120v80H520v120h-80ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z" />
+          </svg>
         </button>
       </div>
     </div>
-  </div>
+  </article>
 }
