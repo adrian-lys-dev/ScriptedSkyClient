@@ -12,8 +12,14 @@
 
     <!-- Cart Content -->
     <div class="p-4 flex flex-col flex-grow">
-      <!-- Author -->
-      <span class="text-gray-400 text-xs uppercase mb-1 truncate">{{book.authorNames}}</span>
+      
+      <!-- Author и Рейтинг в один ряд -->
+      <div class="flex justify-between items-center mb-1">
+        <span class="text-gray-400 text-xs uppercase truncate">{{book.authorNames}}</span>
+        <span class="text-sm font-medium text-yellow-500 ml-2">
+          ★{{book.rating}}
+        </span>
+      </div>
 
       <!-- Title -->
       <p routerLink="/shop/{{book.id}}"

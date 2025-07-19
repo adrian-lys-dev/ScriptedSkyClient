@@ -49,21 +49,27 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class FilterComponent {
   @Input() filterName: string = '';
   @Input() filterOptions: any[] = [];
-  @Input() selectedIds: string[] = [];
+  @Input() selectedIds: number[] = [];
 
-  @Output() selectionChange = new EventEmitter<string[]>();
+  @Output() selectionChange = new EventEmitter<number[]>();
+
 
   expanded: boolean = false;
 
   onSelectionChange(option: any) {
     const isSelected = this.selectedIds.includes(option.id);
+
     if (isSelected) {
       this.selectedIds = this.selectedIds.filter(id => id !== option.id);
     } else {
       this.selectedIds = [...this.selectedIds, option.id];
     }
     this.selectionChange.emit(this.selectedIds);
+
+    console.log(`Selected IDs for ${this.filterName}:`, this.selectedIds);
+    
   }
+
 
   toggleExpand() {
     this.expanded = !this.expanded;

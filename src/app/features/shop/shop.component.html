@@ -2,23 +2,23 @@
 <div class="container mx-auto">
   <main class="container flex flex-col">
     <div class="grid grid-cols-1 lg:grid-cols-5 items-center lg:gap-6">
-      <!-- Название занимает 1 колонку -->
+      <!-- The title takes 1 column -->
       <div class="col-span-1">
         <h1 class="all-product-subtitle text-4xl lg:text-3xl xl:text-4xl font-extrabold whitespace-nowrap">
           Catalog Books
         </h1>
       </div>
 
-      <!-- Поиск и другие элементы занимают 4 колонки -->
+      <!-- Search and other elements takes 4 columns -->
       <div class="col-span-4 flex items-center justify-between gap-2">
-        <!-- Поиск -->
+        <!-- Search -->
         <div class="relative w-full max-w-full">
           <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="flex w-full">
             <input type="search" class="pl-3 py-2 border border-gray-300 rounded-lg w-full text-sm text-gray-900"
               placeholder="Search" name="search" [(ngModel)]="shopParams.search" />
             <button type="submit"
               class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer">
-              <!-- SVG иконка поиска -->
+              <!-- SVG search icon -->
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                 fill="currentColor">
                 <path
@@ -28,9 +28,9 @@
           </form>
         </div>
 
-        <!-- Сортировка -->
+        <!-- Sorting -->
         <div class="relative">
-          <button id="sortButton" (click)="toggleDropdown()" class="flex hover:text-gray-900 items-center">
+          <button id="sortButton" (click)="toggleDropdown()" class="flex hover:text-gray-900 items-center cursor-pointer">
             Sort
             <svg class="ml-1 w-5 h-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor"
               aria-hidden="true" data-slot="icon">
@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <!-- Кнопка фильтров для мобильных -->
+        <!-- Button filters for mobile -->
         <button class="hover:text-gray-500 lg:hidden" (click)="toggleFilters()">
           <svg class="w-5 h-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
             <path fill-rule="evenodd"
@@ -170,11 +170,6 @@
   <div class="space-y-2 overflow-y-auto h-[calc(100vh-4rem)]">
     <app-filter *ngIf="genres.length > 0" filterName="Genres" [filterOptions]="genres" [selectedIds]="selectedIdGenres"
       (selectionChange)="onSelectionChange($event, 'selectedIdGenres')"></app-filter>
-    <app-filter *ngIf="authors.length > 0" filterName="Authors" [filterOptions]="authors"
-      [selectedIds]="selectedIdAuthors" (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')"></app-filter>
-    <app-filter *ngIf="publishers.length > 0" filterName="Publishers" [filterOptions]="publishers"
-      [selectedIds]="selectedIdPublishers"
-      (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')"></app-filter>
     <div class="flex">
       <button (click)="resetFilters()"
         class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
