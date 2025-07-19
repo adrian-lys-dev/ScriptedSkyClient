@@ -28,3 +28,10 @@ body {
   padding-bottom: 16px;
   display: inline-block;
 }
+
+input:focus {
+  outline: none;
+  border: 1px solid var(--primary-color);
+  box-shadow: none;
+}
+

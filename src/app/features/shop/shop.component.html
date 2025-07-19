@@ -14,7 +14,7 @@
         <!-- Search -->
         <div class="relative w-full max-w-full">
           <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="flex w-full">
-            <input type="search" class="pl-3 py-2 border border-gray-300 rounded-lg w-full text-sm text-gray-900"
+            <input type="text" class="pl-3 py-2 border border-gray-300 rounded-lg w-full text-sm text-gray-900"
               placeholder="Search" name="search" [(ngModel)]="shopParams.search" />
             <button type="submit"
               class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer">
@@ -170,6 +170,14 @@
   <div class="space-y-2 overflow-y-auto h-[calc(100vh-4rem)]">
     <app-filter *ngIf="genres.length > 0" filterName="Genres" [filterOptions]="genres" [selectedIds]="selectedIdGenres"
       (selectionChange)="onSelectionChange($event, 'selectedIdGenres')"></app-filter>
+  
+    <app-filter *ngIf="authors.length > 0" filterName="Authors" [filterOptions]="authors"
+      [selectedIds]="selectedIdAuthors" (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')">
+    </app-filter>
+  
+    <app-filter *ngIf="publishers.length > 0" filterName="Publishers" [filterOptions]="publishers"
+      [selectedIds]="selectedIdPublishers" (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')">
+    </app-filter>
     <div class="flex">
       <button (click)="resetFilters()"
         class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
