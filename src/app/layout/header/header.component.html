@@ -2,14 +2,16 @@
     <input type="checkbox" id="menu-toggle" class="hidden peer" />
     <div class="container mx-auto flex items-center justify-between p-2">
         <div class="flex items-center gap-10">
-            <div class="flex items-center gap-2 cursor-pointer">
+            <div routerLink="/" class="flex items-center gap-2 cursor-pointer">
                 <img src="logo.ico" alt="logo" class="w-10 h-10" />
                 <a class="text-2xl font-semibold text-gray-800">ScriptedSky</a>
             </div>
 
             <nav class="hidden md:flex gap-10">
-                <a routerLink="/" class="desktop-nav-item">Home</a>
-                <a routerLink="/shop" class="desktop-nav-item">Books</a>
+                <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" 
+                    class="desktop-nav-item">Home</a>
+                <a routerLink="/shop" routerLinkActive="active"
+                    class="desktop-nav-item">Books</a>
                 <a class="desktop-nav-item">Contacts</a>
             </nav>
 
@@ -37,7 +39,7 @@
     <div class="fixed top-0 left-0 h-full w-64 bg-[#f6f6fc] shadow-lg -translate-x-full peer-checked:translate-x-0 transition-transform duration-300 z-50 p-6 flex flex-col gap-4">
 
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2 cursor-pointer">
+            <div routerLink="/"class="flex items-center gap-2 cursor-pointer">
                 <img src="logo.ico" alt="logo" class="w-8 h-8" />
                 <a class="text-xl font-semibold text-gray-800">ScriptedSky</a>
             </div>
@@ -45,7 +47,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
             </label>
         </div>
-        <a routerLink="/" routerLinkActive="active" class="mobile-nav-item">Home</a>
+        <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" class="mobile-nav-item">Home</a>
         <a routerLink="/shop" routerLinkActive="active" class="mobile-nav-item">Books</a>
         <a class="mobile-nav-item">Contacts</a>
 

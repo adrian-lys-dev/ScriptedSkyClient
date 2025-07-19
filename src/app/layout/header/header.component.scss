@@ -79,3 +79,9 @@ header svg:hover {
 .mobile-nav-item:hover {
   color: var(--primary-color);
 }
+
+a {
+  &.active {
+    color: var(--primary-color);
+  }
+}
