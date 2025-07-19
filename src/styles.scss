@@ -8,10 +8,18 @@
   --main-bg: rgba(240,245,249,255);
 
   --mat-paginator-container-text-font: 'Jost', sans-serif;
+  --mat-snack-bar-supporting-text-font: 'Jost', sans-serif;
+  --mat-button-text-label-text-font: 'Jost', sans-serif;
 
   @include mat.paginator-overrides((
     container-background-color: transparent,
   ));
+
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: red,
+  ));
+
 
 }
 
@@ -34,4 +42,3 @@ input:focus {
   border: 1px solid var(--primary-color);
   box-shadow: none;
 }
-

@@ -19,3 +19,9 @@
 .social:hover svg {
     fill: var(--color-white);
 }
+
+a {
+  &.active {
+    color: var(--primary-color);
+  }
+}

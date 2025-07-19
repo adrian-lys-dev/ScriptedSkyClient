@@ -1,0 +1,39 @@
+<div class="container mx-auto">
+  <h1 class="text-2xl font-bold mb-6">Test Error Component</h1>
+
+  <div class="flex flex-wrap gap-4 mb-6">
+
+    <button (click)="get400Error()"
+      class="flex-1 min-w-[120px] bg-red-600 text-white font-semibold py-2 rounded-md shadow hover:bg-red-700 active:bg-red-800 transition cursor-pointer">
+      Get 400
+    </button>
+    <button (click)="get401Error()"
+      class="flex-1 min-w-[120px] bg-yellow-500 text-black font-semibold py-2 rounded-md shadow hover:bg-yellow-600 active:bg-yellow-700 transition cursor-pointer">
+      Get 401
+    </button>
+    <button (click)="get500Error()"
+      class="flex-1 min-w-[120px] bg-gray-700 text-white font-semibold py-2 rounded-md shadow hover:bg-gray-800 active:bg-gray-900 transition cursor-pointer">
+      Get 500
+    </button>
+    <button (click)="get404Error()"
+      class="flex-1 min-w-[120px] bg-blue-600 text-white font-semibold py-2 rounded-md shadow hover:bg-blue-700 active:bg-blue-800 transition cursor-pointer">
+      Get 404
+    </button>
+    <button (click)="get400ValidationError()"
+      class="flex-1 min-w-[180px] bg-purple-600 text-white font-semibold py-2 rounded-md shadow hover:bg-purple-700 active:bg-purple-800 transition cursor-pointer">
+      Get Validation Error
+    </button>
+  </div>
+
+  @if (validationErrors) {
+  <div class="mx-auto max-w-lg mt-5 bg-red-100">
+    <ul class="space-y-2 p-2">
+      @for (error of validationErrors; track $index) {
+      <li class="text-red-800">{{error}}</li>
+      }
+    </ul>
+  </div>
+  }
+
+
+</div>
