@@ -125,6 +125,19 @@
             }
 
           </div>
+
+          <div class="flex justify-center mt-6">
+            <mat-paginator *ngIf="books.data.length > 0"
+                          (page)="handlePageEvent($event)"
+                          [length]="books.count"
+                          [pageSize]="shopParams.PageSize"
+                          [showFirstLastButtons]="true"
+                          [pageIndex]="shopParams.PageNumber - 1"
+                          aria-label="Select page"
+                          hidePageSize="true">
+            </mat-paginator>
+          </div>
+         
         </section>
 
 
@@ -137,5 +150,55 @@
 
 </div>
 
+<!-- Mobile Menu Overlay -->
+<div class="lg:hidden fixed inset-0 bg-[rgba(0,0,0,0.5)] z-40" *ngIf="isFiltersVisible" (click)="toggleFilters()">
+</div>
+
+<!-- Mobile Filtering Sidebar -->
+<div class="lg:hidden fixed inset-y-0 left-0 w-64 bg-white z-50 transform transition-transform duration-300 ease-in-out"
+  [ngClass]="{'translate-x-0': isFiltersVisible, '-translate-x-full': !isFiltersVisible}">
+  <div class="flex items-center justify-between pb-2 p-2">
+    <h2>Filters</h2>
+    <button (click)="toggleFilters()" class=" hover:text-gray-600">
+      <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+        viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M6 18 17.94 6M18 18 6.06 6" />
+      </svg>
+    </button>
+  </div>
+  <div class="space-y-2 overflow-y-auto h-[calc(100vh-4rem)]">
+    <app-filter *ngIf="genres.length > 0" filterName="Genres" [filterOptions]="genres" [selectedIds]="selectedIdGenres"
+      (selectionChange)="onSelectionChange($event, 'selectedIdGenres')"></app-filter>
+    <app-filter *ngIf="authors.length > 0" filterName="Authors" [filterOptions]="authors"
+      [selectedIds]="selectedIdAuthors" (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')"></app-filter>
+    <app-filter *ngIf="publishers.length > 0" filterName="Publishers" [filterOptions]="publishers"
+      [selectedIds]="selectedIdPublishers"
+      (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')"></app-filter>
+    <div class="flex">
+      <button (click)="resetFilters()"
+        class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
+        Reset Filters
+        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18 17.94 6M18 18 6.06 6" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex">
+      <button (click)="applyFilters()"
+        class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
+        Apply Filters
+        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 11.917 9.724 16.5 19 7.5" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
 
 }

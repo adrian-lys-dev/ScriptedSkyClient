@@ -1,4 +1,5 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShopService } from '../../core/services/shop.service';
 import { CatalogBook } from '../../shared/models/catalogBook';
 import { BookItemComponent } from './book-item/book-item.component';
@@ -6,19 +7,22 @@ import { Pagination } from '../../shared/models/pagination';
 import { ShopParams } from '../../shared/models/shopParams';
 import { FilteringItems } from '../../shared/models/filteringItems';
 import { FormsModule } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { FilterComponent } from './filters/filters.component';
 
 @Component({
   selector: 'app-shop',
-  imports: [BookItemComponent, FormsModule, CommonModule, FilterComponent],
+  standalone: true,
+  imports: [BookItemComponent, FormsModule, CommonModule, FilterComponent, MatPaginator],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
 })
 export class ShopComponent implements OnInit {
 
   private shopService = inject(ShopService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   books?: Pagination<CatalogBook>;
 
@@ -40,27 +44,58 @@ export class ShopComponent implements OnInit {
     { name: 'Price: High-Low', value: 'priceDesc' }
   ];
 
+  isOpen = false;
+  isFiltersVisible = false;
+
   ngOnInit(): void {
-    this.getBooks();
+    this.route.queryParams.subscribe(params => {
+      this.shopParams.PageNumber = +params['page'] || 1;
+      this.shopParams.PageSize = +params['pageSize'] || 10;
+      this.shopParams.sort = params['sort'] || '';
+
+      this.selectedIdGenres = params['genres'] ? params['genres'].split(',') : [];
+      this.selectedIdAuthors = params['authors'] ? params['authors'].split(',') : [];
+      this.selectedIdPublishers = params['publishers'] ? params['publishers'].split(',') : [];
+
+      this.shopParams.genres = this.selectedIdGenres;
+      this.shopParams.authors = this.selectedIdAuthors;
+      this.shopParams.publishers = this.selectedIdPublishers;
+
+      this.getBooks();
+    });
+
     this.getGenreForFilter();
     this.getAuthorForFilter();
     this.getPublisherForFilter();
   }
 
+  updateUrl() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        page: this.shopParams.PageNumber,
+        pageSize: this.shopParams.PageSize,
+        sort: this.shopParams.sort || null,
+        genres: this.selectedIdGenres.length ? this.selectedIdGenres.join(',') : null,
+        authors: this.selectedIdAuthors.length ? this.selectedIdAuthors.join(',') : null,
+        publishers: this.selectedIdPublishers.length ? this.selectedIdPublishers.join(',') : null
+      },
+      queryParamsHandling: 'merge'
+    });
+  }
+
   onSearchChange() {
     this.shopParams.PageNumber = 1;
+    this.updateUrl();
     this.getBooks();
   }
 
   handlePageEvent(event: PageEvent) {
     this.shopParams.PageNumber = event.pageIndex + 1;
     this.shopParams.PageSize = event.pageSize;
+    this.updateUrl();
     this.getBooks();
   }
-
-
-  // Sorting
-  isOpen = false;
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
@@ -68,40 +103,32 @@ export class ShopComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   closeDropdown(event: MouseEvent) {
-    // Get references to the dropdown menu and the sort button elements by their IDs
     const dropdown = document.getElementById('dropdown');
     const button = document.getElementById('sortButton');
-
-    // If both elements exist and the click event target is NOT inside the dropdown or the button,
-    // then close the dropdown by setting isOpen to false
     if (dropdown && button && !dropdown.contains(event.target as Node) && !button.contains(event.target as Node)) {
       this.isOpen = false;
     }
   }
 
-
   onSortChange(sortValue: string) {
     if (sortValue) {
       this.shopParams.sort = sortValue;
       this.shopParams.PageNumber = 1;
+      this.updateUrl();
       this.getBooks();
     }
   }
-
-  // Filtering
-
-  isFiltersVisible = false;
 
   toggleFilters() {
     this.isFiltersVisible = !this.isFiltersVisible;
   }
 
   applyFilters() {
-    this.shopParams.genres = this.selectedIdGenres,
-      this.shopParams.authors = this.selectedIdAuthors,
-      this.shopParams.publishers = this.selectedIdPublishers,
-      this.shopParams.PageNumber = 1;
-    // console.log('Shop Params:', this.shopParams);
+    this.shopParams.genres = this.selectedIdGenres;
+    this.shopParams.authors = this.selectedIdAuthors;
+    this.shopParams.publishers = this.selectedIdPublishers;
+    this.shopParams.PageNumber = 1;
+    this.updateUrl();
     this.getBooks();
   }
 
@@ -115,8 +142,7 @@ export class ShopComponent implements OnInit {
     this.shopParams.authors = [];
     this.shopParams.publishers = [];
     this.shopParams.PageNumber = 1;
-    // console.log('Filters reset');
-    // console.log('Shop Params after reset:', this.shopParams);
+    this.updateUrl();
     this.getBooks();
   }
 
@@ -151,5 +177,4 @@ export class ShopComponent implements OnInit {
       error: error => console.log(error)
     });
   }
-
 }

@@ -4,6 +4,6 @@ export class ShopParams {
   publishers : string[] = [];
   sort = 'name';
   PageNumber = 1;
-  PageSize = 10;
+  PageSize = 8;
   search = '';
 }

@@ -1,9 +1,18 @@
+@use '@angular/material' as mat;
+
 :root {
   --secondary-color: #01001a;
   --primary-color: #0160ff;
   --white-color: white;
   --title-color: #1b3764;
-  --main-bg: rgba(240,245,249,255)
+  --main-bg: rgba(240,245,249,255);
+
+  --mat-paginator-container-text-font: 'Jost', sans-serif;
+
+  @include mat.paginator-overrides((
+    container-background-color: transparent,
+  ));
+
 }
 
 body {
