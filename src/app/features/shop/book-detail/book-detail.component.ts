@@ -15,6 +15,7 @@ export class BookDetailComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   
   book?: Book;
+  readonly stars = [0, 1, 2, 3, 4];
 
   ngOnInit(): void {
     this.loadBook();

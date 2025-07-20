@@ -1,8 +1,136 @@
-@if (book) {
-<div class="container mx-auto border-t border-[#d9d9d9]">
-    <div class="py-5">
-        <h1 class="text-2xl">{{book.title}}</h1>
-    </div>
-</div>
+@if (book) 
+{
+    <div class="container xs:max-w-screen-2xl mx-auto border-t border-gray-300 px-4 py-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-8">
 
+            <!-- Book Cover Section -->
+            <div class="md:col-span-7 lg:col-span-5 xl:col-span-4">
+                <div class="bg-gray-100 p-5 md:p-8 rounded-md shadow-inner
+                        flex justify-center md:justify-start">
+                    <img src="{{book.pictureURL}}" alt="Echoes of your soul" 
+                        class="w-full pm:w-auto md:w-full h-auto pm:h-[80vh] md:h-auto
+                            rounded-md transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer" />
+                </div>
+            
+            </div>
+
+            <!-- Book Information Section -->
+            <div class="md:col-span-5 lg:col-span-7 xl:col-span-8">
+                <div class="flex flex-wrap items-center gap-2 mt-2">
+                    @if (book.quantityInStock > 0) 
+                    {
+                        <span class="inline-flex items-center bg-blue-600 text-white text-base font-semibold px-2 py-1 rounded">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                                <path d="M80-120v-560l400-160 400 160v560H640v-320H320v320H80Zm280 0v-80h80v80h-80Zm80-120v-80h80v80h-80Zm80 120v-80h80v80h-80Z"/>
+                            </svg>
+                            In stock
+                        </span>
+
+                        @if (book.quantityInStock < 10) 
+                        {
+                            <span class="inline-flex items-center bg-orange-400 text-white text-base font-semibold px-2 py-1 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" height="20px" viewBox="0 -960 960 960" width="20px" fill="#fff">
+                                    <path d="M160-400q0-105 50-187t110-138q60-56 110-85.5l50-29.5v132q0 37 25 58.5t56 21.5q17 0 32.5-7t28.5-23l18-22q72 42 116 116.5T800-400q0 88-43 160.5T644-125q17-24 26.5-52.5T680-238q0-40-15-75.5T622-377L480-516 339-377q-29 29-44 64t-15 75q0 32 9.5 60.5T316-125q-70-42-113-114.5T160-400Zm320-4 85 83q17 17 26 38t9 45q0 49-35 83.5T480-120q-50 0-85-34.5T360-238q0-23 9-44.5t26-38.5l85-83Z"/>
+                                </svg>
+                                HOT!
+                            </span>
+                        }
+                    }
+                    @else 
+                    {
+                        <span class="inline-flex items-center bg-red-600 text-white text-base font-semibold px-2 py-1 rounded">
+                            Out of stock
+                        </span>
+                    }
+                </div>
+
+                
+                <h1 class="text-3xl font-semibold mb-1 mt-2">{{book.title}}</h1>
+
+                <span class="all-product-subtitle text-3xl font-bold text-gray-900">{{book.price}} ₴</span>
+
+                <!-- Book Rating -->
+                <div class="flex items-center space-x-1 text-yellow-500 text-lg mb-4">
+                    <span class="mr-2">{{book.rating}}</span>
+                    @if (book) {
+                        @for (i of stars; track i) {
+                            @if (book.rating >= i + 1) {
+                                <!-- Empty Star -->
+                                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2
+                                        9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                            } @else if (book.rating >= i + 0.5) {
+                                <!-- Half of the star: empty + half painted -->
+                                <div class="relative w-6 h-6">
+                                <!-- Empty Star -->
+                                <svg class="w-6 h-6 text-gray-300 absolute top-0 left-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2
+                                            9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                </svg>
+
+                                <!-- The left half is up -->
+                                <div class="absolute top-0 left-0 w-1/2 h-full overflow-hidden">
+                                    <svg class="w-6 h-6 fill-current text-yellow-500" viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2
+                                            9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                    </svg>
+                                </div>
+                                </div>
+                            } @else {
+                                <!-- Empty Star -->
+                                <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2
+                                        9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                </svg>
+                            }
+                        }
+                    }
+                </div>
+
+                <!-- Description -->
+                <p class="text-gray-700 2 text-lg text-justify">
+                    {{book.description}}
+                </p>
+
+                <!-- Author -->
+                <p class="text-blue-700 font-semibold mb-6 text-xl flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1e40af"><path d="M120-120v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-528 56-56-56-56-56 56 56 56Z"/></svg>
+                    By,
+                    @for (author of book.author; track author.id) {
+                        {{author.name}}{{ author !== book.author[book.author.length - 1] ? ', ' : '.' }}
+                    }
+                </p>
+            
+                <!-- Shopping Cart Actions -->
+                <div class="flex items-center space-x-3 2xl mb-6">
+                    <input type="number" id="quantity" min="1" value="1" class="w-16 border border-gray-300 rounded px-2 py-2" />
+                    <button class="flex items-center bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer">
+                        Add to Cart
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-5 h-5 fill-white hover:fill-primary duration-200" viewBox="0 -960 960 960">
+                            <path
+                                d="M440-600v-120H320v-80h120v-120h80v120h120v80H520v120h-80ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- General Book Info -->
+                <ul class="text-gray-700 space-y-1 text-xl">
+                    <li>
+                        <span class="font-semibold">Genres: </span>
+                        @for (genre of book.genre; track genre.id) {
+                            {{genre.name}}{{ genre !== book.genre[book.genre.length - 1] ? ', ' : '' }}
+                        }
+                    </li>
+                    <li><span class="font-semibold">Publisher: </span>{{book.publisher.name}}</li>
+                    <li><span class="font-semibold">Release Year: </span> {{book.releaseYear}}</li>
+                    <li><span class="font-semibold">Paperback: </span> {{book.pageNumber}}</li>
+                    <li><span class="font-semibold">ISBN: </span> {{book.isbn}}</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
 }

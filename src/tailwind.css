@@ -2,6 +2,7 @@
 
 @theme {
   --breakpoint-xs: 340px;
+  --breakpoint-pm: 410px;
 
   --color-primary: #0160ff;
   --color-secondary: #01001a;
