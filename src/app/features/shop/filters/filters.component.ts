@@ -64,10 +64,7 @@ export class FilterComponent {
     } else {
       this.selectedIds = [...this.selectedIds, option.id];
     }
-    this.selectionChange.emit(this.selectedIds);
-
-    console.log(`Selected IDs for ${this.filterName}:`, this.selectedIds);
-    
+    this.selectionChange.emit(this.selectedIds);    
   }
 
 
