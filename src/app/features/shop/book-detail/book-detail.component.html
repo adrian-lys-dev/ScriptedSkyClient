@@ -20,9 +20,6 @@
                     @if (book.quantityInStock > 0) 
                     {
                         <span class="inline-flex items-center bg-blue-600 text-white text-base font-semibold px-2 py-1 rounded">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
-                                <path d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120Zm-80-240v-480h160v480H400Z" />
-                            </svg>
                             In stock
                         </span>
 
@@ -132,5 +129,84 @@
             </div>
 
         </div>
+        <div>
+            <h2 class="all-product-subtitle text-xl xs:text-2xl font-semibold mt-8">What Our Customers Say</h2>
+            <!-- Форма отзыва -->
+            <form class="w-full bg-white rounded-md shadow-md p-6 mb-6">
+                <h3 class="text-lg font-medium mb-4">Leave a Review</h3>
+                        
+                <!-- Рейтинг -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                    <select name="rating" class="w-full border border-gray-300 rounded-md px-4 py-2 text-yellow-400">
+                        <option value="5">5 ★</option>
+                        <option value="4">4 ★</option>
+                        <option value="3">3 ★</option>
+                        <option value="2">2 ★</option>
+                        <option value="1">1 ★</option>
+                    </select>
+                
+                </div>
+                <!-- Текст отзыва -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Your Review</label>
+                    <textarea name="review" rows="4"
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200"></textarea>
+                </div>
+            
+                <!-- Кнопка отправки -->
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md">
+                    Submit Review
+                </button>
+            </form>
+            <div class="flex flex-col items-start gap-4 mb-8">
+                @for (review of book.reviews; track review.id) {
+                    <div class="bg-white p-6 rounded-md shadow-md w-full">
+                    
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="font-medium text-base">{{review.userName}}</span>
+                                <span class="text-sm text-gray-500">{{ review.createdAt | date:'d MMMM y' }}</span>
+
+                                <div class="flex text-yellow-400 ml-2">
+                                    {{review.rating}}
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.561-.955L10 0l2.951 5.955 6.561.955-4.756 4.635 1.122 6.545z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Btns -->
+                            <div class="flex gap-2">
+                                <!-- Edit -->
+                                <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                        class="cursor-pointer fill-primary hover:fill-blue-700">
+                                        <path
+                                            d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+                                    </svg>
+                                </button>
+                                <!-- Delete -->
+                                <button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                        class="cursor-pointer fill-primary hover:fill-red-500">
+                                        <path
+                                            d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    
+                        <!-- Review Text -->
+                        <p class="text-gray-700">
+                            {{review.reviewText}}
+                        </p>
+                    </div>
+                }
+
+            </div>
+       
+        </div>
+
     </div>
 }

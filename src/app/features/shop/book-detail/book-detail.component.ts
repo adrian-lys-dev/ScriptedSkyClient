@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ShopService } from '../../../core/services/shop.service';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '../../../shared/models/book';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-detail',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.scss'
 })
