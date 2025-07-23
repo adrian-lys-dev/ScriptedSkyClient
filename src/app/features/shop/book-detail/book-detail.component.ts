@@ -3,6 +3,7 @@ import { ShopService } from '../../../core/services/shop.service';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '../../../shared/models/book';
 import { DatePipe } from '@angular/common';
+import { BusyService } from '../../../core/services/busy.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -14,6 +15,7 @@ export class BookDetailComponent implements OnInit {
 
   private shopService = inject(ShopService);
   private activatedRoute = inject(ActivatedRoute);
+  busyService = inject(BusyService);
   
   book?: Book;
   readonly stars = [0, 1, 2, 3, 4];

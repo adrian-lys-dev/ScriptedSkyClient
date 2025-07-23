@@ -1,3 +1,13 @@
+@if (busyService.loading && books == null || books == null)
+{
+  <div class="bg-white z-50 flex items-center justify-center w-screen h-[80hv] overflow-hidden">
+    <img src="assets/loading/bookLoading.gif"
+        alt="Loading..."
+        class="w-[800px] max-w-none h-auto object-none" />
+  </div>
+}
+
+
 @if (books) {
 <div class="container xs:max-w-screen-2xl mx-auto">
   <main class="container xs:max-w-screen-2xl mx-auto flex flex-col px-4 sm:px-6 md:px-8 lg:px-6 xl:px-2">
@@ -110,36 +120,44 @@
         <!-- Books Grid -->
         <section class="lg:col-span-4 mt-2">
 
-
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-4">
-            @if (books.data.length > 0) {
-            @for (book of books.data; track book.id) {
-            <app-book-item [book]="book"></app-book-item>
+            @if (busyService.loading || books == null)
+            {
+              <div class="flex flex-col items-center justify-center w-full col-span-full h-[60vh]">
+                <img src="assets/loading/bookLoadingCatalog.gif"
+                    alt="Loading..."
+                    class="w-64 md:w-80 lg:w-96 max-w-full h-auto object-none" />
+                <p class="text-center text-gray-500 mt-4 text-lg">Loading books...</p>
+              </div>
             }
-            } @else {
-            <div class="flex flex-col items-center justify-center w-full col-span-full">
-              <img src="assets/states/empty_state.png" alt="No books found" class="w-64 md:w-80 lg:w-96 max-w-full h-auto">
-              <p class="text-center text-gray-600 text-lg mt-4">No books found.</p>
-              <p class="text-center text-gray-600 text-sm mt-4">Maybe try other filters?</p>
+            @else if (books.data.length > 0)
+            {
+              @for (book of books.data; track book.id) 
+              {
+                <app-book-item [book]="book"></app-book-item>
+              }
+            }
+            @else
+            {
+              <div class="flex flex-col items-center justify-center w-full col-span-full h-[60vh]">
+                <img src="assets/states/empty_state.png" alt="No books found"
+                    class="w-64 md:w-80 lg:w-96 max-w-full h-auto">
+                <p class="text-center text-gray-600 text-lg mt-4">No books found.</p>
+                <p class="text-center text-gray-600 text-sm mt-4">Maybe try other filters?</p>
+              </div>
+            }
+          </div>
+          @if (!busyService.loading)
+          {
+            <div class="flex justify-center mt-6">
+              <mat-paginator *ngIf="books.data.length > 0" (page)="handlePageEvent($event)" [length]="books.count"
+                [pageSize]="shopParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="shopParams.PageNumber - 1"
+                aria-label="Select page" hidePageSize="true">
+              </mat-paginator>
             </div>
-            }
-
-          </div>
-
-          <div class="flex justify-center mt-6">
-            <mat-paginator *ngIf="books.data.length > 0"
-                          (page)="handlePageEvent($event)"
-                          [length]="books.count"
-                          [pageSize]="shopParams.PageSize"
-                          [showFirstLastButtons]="true"
-                          [pageIndex]="shopParams.PageNumber - 1"
-                          aria-label="Select page"
-                          hidePageSize="true">
-            </mat-paginator>
-          </div>
+          }
          
         </section>
-
 
       </div>
     </section>

@@ -10,10 +10,12 @@ import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { FilterComponent } from './filters/filters.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BusyService } from '../../core/services/busy.service';
 
 @Component({
   selector: 'app-shop',
-  imports: [BookItemComponent, FormsModule, CommonModule, FilterComponent, MatPaginator],
+  imports: [BookItemComponent, FormsModule, CommonModule, FilterComponent, MatPaginator, MatProgressSpinnerModule],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
 })
@@ -22,6 +24,7 @@ export class ShopComponent implements OnInit {
   private shopService = inject(ShopService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  busyService = inject(BusyService);
 
   books?: Pagination<CatalogBook>;
 
