@@ -2,17 +2,15 @@ import { Component, inject } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
 import { CartItemComponent } from "./cart-item/cart-item.component";
 import { RouterLink } from '@angular/router';
+import { OrderSummaryComponent } from "../../shared/components/order-summary/order-summary.component";
 
 @Component({
   selector: 'app-cart',
-  imports: [CartItemComponent, RouterLink],
+  imports: [CartItemComponent, RouterLink, OrderSummaryComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
 export class CartComponent {
   cartService = inject(CartService);
 
-  trackByBookId(index: number, item: any): number {
-    return item.bookId;
-  }
 }
