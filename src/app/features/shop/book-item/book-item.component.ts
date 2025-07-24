@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CatalogBook } from '../../../shared/models/catalogBook';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-book-item',
@@ -10,4 +11,6 @@ import { RouterLink } from '@angular/router';
 })
 export class BookItemComponent {
   @Input() book?: CatalogBook;
+
+  cartService = inject(CartService);
 }
