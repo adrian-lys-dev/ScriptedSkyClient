@@ -86,3 +86,7 @@ a {
     color: var(--primary-color);
   }
 }
+
+.custom-badge .mat-badge-content:empty {
+  display: none;
+}
