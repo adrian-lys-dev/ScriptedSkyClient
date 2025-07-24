@@ -92,6 +92,7 @@ export class CartService {
     return {
       bookId: item.id,
       bookName: item.title,
+      authorName: item.authorNames,
       price: item.price,
       quantity: 0,
       pictureURL: item.pictureURL

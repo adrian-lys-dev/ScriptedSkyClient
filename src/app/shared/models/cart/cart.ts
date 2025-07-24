@@ -9,6 +9,7 @@ export type CartType = {
 export type CartItem = {
   bookId : number;
   bookName: string;
+  authorName: string;
   price: number;
   quantity: number;
   pictureURL: string;
