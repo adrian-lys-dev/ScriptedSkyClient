@@ -47,9 +47,11 @@ export class CartService {
     })
   }
 
-  addItemToCart(item: CartItem | CatalogBook, quantity = 1) {    
+  addItemToCart(item: CartItem | CatalogBook | Book, quantity = 1) {    
     const cart = this.cart() ?? this.createCart()
-    if (this.isBook(item)) {
+    if (this.isCatalogBook(item)) {
+      item = this.mapCatalogBookToCartItem(item);
+    } else if (this.isBook(item)) {
       item = this.mapBookToCartItem(item);
     }
     cart.items = this.addOrUpdateItem(cart.items, item, quantity);
@@ -97,11 +99,16 @@ export class CartService {
     return items;
   }
 
-  private isBook(item: CartItem | CatalogBook): item is CatalogBook {
-    return (item as CatalogBook).id !== undefined;
+  private isCatalogBook(item: any): item is CatalogBook {
+    return (item as CatalogBook).authorNames !== undefined;
   }
 
-  private mapBookToCartItem(item: CatalogBook): CartItem {
+
+  private isBook(item: any): item is Book {
+    return (item as Book).id !== undefined;
+  }
+
+  private mapCatalogBookToCartItem(item: CatalogBook): CartItem {
     return {
       bookId: item.id,
       bookName: item.title,
@@ -111,6 +118,18 @@ export class CartService {
       pictureURL: item.pictureURL
     }
   }
+
+  private mapBookToCartItem(item: Book): CartItem {
+    return {
+      bookId: item.id,
+      bookName: item.title,
+      authorName: item.author.map(a => a.name).join(', '),
+      price: item.price,
+      quantity: 0,
+      pictureURL: item.pictureURL
+    };
+  }
+
 
   private createCart(): Cart {
     const cart = new Cart();
