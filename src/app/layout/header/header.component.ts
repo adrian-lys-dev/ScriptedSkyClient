@@ -1,13 +1,14 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { MatBadge } from '@angular/material/badge';
-import { RouterLink,  RouterLinkActive} from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { BusyService } from '../../core/services/busy.service';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CartService } from '../../core/services/cart.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [MatBadge, RouterLink, RouterLinkActive, MatProgressBarModule],
+  imports: [MatBadge, RouterLink, RouterLinkActive, MatProgressBarModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -17,13 +18,35 @@ export class HeaderComponent {
   cartService = inject(CartService);
 
   ngOnInit(): void {
-    this.closeMenuOnResize();    
+    this.closeMenuOnResize();
   }
+
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: MouseEvent) {
+    const dropdown = document.getElementById('userDropdown');
+    const button = document.getElementById('userButton');
+
+    if (
+      dropdown &&
+      button &&
+      !dropdown.contains(event.target as Node) &&
+      !button.contains(event.target as Node)
+    ) {
+      this.isMenuOpen = false;
+    }
+  }
+
 
   @HostListener('window:resize', [])
   onResize() {
     this.closeMenuOnResize();
-    
+
   }
 
   private closeMenuOnResize() {
