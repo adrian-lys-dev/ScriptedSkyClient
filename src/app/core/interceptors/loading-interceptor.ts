@@ -8,7 +8,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
 
   // Skip loading for cart requests
   // This is to prevent loading spinner when adding/removing items from the cart
-  if (req.url.includes('/cart')) {
+  if (req.url.includes('/cart') || req.url.includes('/logout')) {
     return next(req).pipe(
       finalize(() => busyService.idle())
     );
