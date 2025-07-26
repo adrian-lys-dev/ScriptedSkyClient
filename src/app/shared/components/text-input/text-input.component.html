@@ -18,21 +18,22 @@
 
     @if (control.touched || control.dirty)
     {
-        <p id="outlined_error_help" class="mt-1 text-xs text-red-600">
-            <span class="font-medium">
-                @if (control.hasError('required')) {
-                    {{ label }} is required
-                }
-                @if (control.hasError('email')) {
-                    Email is invalid
-                }
-                @if (control.hasError('minlength')) {
-                    {{ label }} must be at least {{ control.getError('minlength').requiredLength }} characters
-                }
-                @if (control.hasError('pattern')) {
-                    {{ label }} is invalid, need atleast one numeric character
-                }
-            </span>
-        </p>
+        @if (control.hasError('required')) {
+            <p class="mt-1 text-xs text-red-600 font-medium">{{ label }} is required</p>
+        }
+        @if (control.hasError('email')) {
+            <p class="mt-1 text-xs text-red-600 font-medium">Email is invalid</p>
+        }
+        @if (control.hasError('minlength')) {
+            <p class="mt-1 text-xs text-red-600 font-medium">
+                {{ label }} must be at least {{ control.getError('minlength').requiredLength }} characters
+            </p>
+        }
+        @if (control.hasError('pattern')) {
+            <p class="mt-1 text-xs text-red-600 font-medium">
+                {{ label }} is invalid, need at least one numeric character
+            </p>
+        }
     }
+
 </div>

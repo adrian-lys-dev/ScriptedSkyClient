@@ -15,11 +15,19 @@
     container-background-color: transparent,
   ));
 
-  @include mat.snack-bar-overrides((
-    button-color: white,
-    container-color: red,
-  ));
+  .snack-error {
+    @include mat.snack-bar-overrides((
+      button-color: white,
+      container-color: red,
+    ));
+  }
 
+  .snack-success {
+    @include mat.snack-bar-overrides((
+      button-color: white,
+      container-color: green,
+    ));
+  }
 
 }
 
@@ -41,4 +49,9 @@ input:focus {
   outline: none;
   border: 1px solid var(--primary-color);
   box-shadow: none;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
