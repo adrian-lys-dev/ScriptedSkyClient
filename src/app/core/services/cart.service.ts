@@ -5,6 +5,7 @@ import { Book } from '../../shared/models/book';
 import { map } from 'rxjs';
 import { Cart, CartItem } from '../../shared/models/cart/cart';
 import { CatalogBook } from '../../shared/models/catalogBook';
+import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +19,16 @@ export class CartService {
   itemCount = computed(() => {
     return this.cart()?.items.reduce((sum, item) => sum + item.quantity, 0)
   });
+  selectedDeliveryMethod = signal<DeliveryMethods | null>(null);
   
   totals = computed(() => {
     const cart = this.cart();
+    const delivery = this.selectedDeliveryMethod()
+
     if (!cart) return null;
 
     const subtotalRaw = cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const shipping = 0;
+    const shipping = delivery ? delivery.price : 0;
     const discount = 0;
 
     const subtotal = Number(subtotalRaw.toFixed(2));

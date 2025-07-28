@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -7,7 +7,8 @@ import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } fro
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    CommonModule 
   ],
   templateUrl: './text-input.component.html',
   styleUrl: './text-input.component.scss'
@@ -15,6 +16,7 @@ import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } fro
 export class TextInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() type = 'text';
+  @Input() backgroundColor: string = 'rgba(240,245,249,255)';
 
   constructor(@Self() public controlDir: NgControl) {
     this.controlDir.valueAccessor = this;

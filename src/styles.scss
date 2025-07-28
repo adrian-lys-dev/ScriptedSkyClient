@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 
+
 :root {
   --secondary-color: #01001a;
   --primary-color: #0160ff;
@@ -30,6 +31,11 @@
   }
 
 }
+
+* {
+  font-family: 'Jost', sans-serif !important;
+}
+
 
 body {
   font-family: 'Jost', sans-serif;
