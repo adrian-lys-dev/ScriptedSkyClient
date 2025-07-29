@@ -7,6 +7,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { CartService } from '../../core/services/cart.service';
 import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
 import { BusyService } from '../../core/services/busy.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -17,6 +18,7 @@ import { BusyService } from '../../core/services/busy.service';
 export class CheckoutComponent implements OnInit {
 
   private fb = inject(FormBuilder);
+  private router = inject(Router);
   checkoutService = inject(CheckoutService);
   cartService = inject(CartService);
   busyService = inject(BusyService);
@@ -67,5 +69,6 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit() {
     console.log('Form Submitted', this.checkoutForm.value);
+    this.router.navigate(['/checkout/checkout-success']);
   }
 }
