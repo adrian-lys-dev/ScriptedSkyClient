@@ -12,24 +12,17 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err: HttpErrorResponse) => {
       if (err.status === 400) {
         if (err.error?.errors) {
-
-          const modelStateErrors: string[] = [];
-          for (const key in err.error.errors) {
-            if (err.error.errors[key]) {
-              modelStateErrors.push(...err.error.errors[key]);
-            }
-          }
-          modelStateErrors.forEach(message => snackbar.error(message));
+          console.log(err.error.errors);      
           return throwError(() => err);
         } else if (typeof err.error === 'string') {
           snackbar.error(err.error);
+          return throwError(() => err);
         } else if (err.error?.message) {
           snackbar.error(err.error.message);
+          return throwError(() => err);
         }
-
-        return throwError(() => err);
       }
-
+      
       if (err.status === 401) {
         snackbar.error(err.error?.message || 'Unauthorized');
       }
