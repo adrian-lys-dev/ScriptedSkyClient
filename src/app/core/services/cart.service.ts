@@ -98,6 +98,11 @@ export class CartService {
     })
   }
 
+  clearCartLocally() {
+    localStorage.removeItem('cart_id');
+    this.cart.set(null);
+  }
+
   private addOrUpdateItem(items: CartItem[], item: CartItem, quantity: number): CartItem[] {    
     const index = items.findIndex(x => x.bookId === item.bookId);
     if (index === -1) {

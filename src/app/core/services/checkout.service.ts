@@ -3,6 +3,8 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
 import { map, of } from 'rxjs';
+import { CreateOrder } from '../../shared/models/order/createOrder';
+import { Order } from '../../shared/models/order/orderResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,10 @@ export class CheckoutService {
         return methods;
       })
     )
+  }
+
+  createOrder(order: CreateOrder) {
+    return this.http.post<Order>(this.baseUrl + 'Order', order);
   }
 
 }

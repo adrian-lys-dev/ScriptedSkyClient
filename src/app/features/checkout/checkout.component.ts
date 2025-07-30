@@ -3,11 +3,13 @@ import { OrderSummaryComponent } from "../../shared/components/order-summary/ord
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TextInputComponent } from "../../shared/components/text-input/text-input.component";
 import { CheckoutService } from '../../core/services/checkout.service';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { CartService } from '../../core/services/cart.service';
 import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
 import { BusyService } from '../../core/services/busy.service';
 import { Router } from '@angular/router';
+import { CreateOrder } from '../../shared/models/order/createOrder';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-checkout',
@@ -22,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   checkoutService = inject(CheckoutService);
   cartService = inject(CartService);
   busyService = inject(BusyService);
+  private snackbar = inject(SnackbarService);
 
   ngOnInit() {
     this.checkoutService.getDeliveryMethods().subscribe({
@@ -68,7 +71,42 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Form Submitted', this.checkoutForm.value);
-    this.router.navigate(['/checkout/checkout-success']);
+
+    if (this.checkoutForm.invalid) {
+      this.checkoutForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue = this.checkoutForm.value;
+    const cart = this.cartService.cart();
+
+    if (!cart) {
+      console.error('Cart not found');
+      return;
+    }
+
+    const order: CreateOrder = {
+      cartId: cart.id,
+      deliveryMethodId: formValue.deliveryMethodId!,
+      contactEmail: formValue.contactEmail!,
+      contactName: formValue.contactName!,
+      adress: formValue.deliveryAddress || ''
+    };
+
+    this.checkoutService.createOrder(order).subscribe({
+      next: response => {
+        this.snackbar.success('Order ' + response.id + ' created successfully. Thank you for your purchase!');
+        this.cartService.clearCartLocally();
+        this.router.navigate(['/checkout/checkout-success'], {
+          state: { order: response }
+        });
+      },
+      error: error => {
+        this.snackbar.error('Error creating order');
+        console.error('Error creating order:', error);
+      }
+    })
+
   }
+
 }
