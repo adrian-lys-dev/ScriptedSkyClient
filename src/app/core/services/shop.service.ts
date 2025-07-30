@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Pagination } from '../../shared/models/pagination';
+import { Pagination } from '../../shared/models/pagination/pagination';
 import { CatalogBook } from '../../shared/models/catalogBook';
-import { ShopParams } from '../../shared/models/shopParams';
+import { ShopParams } from '../../shared/models/pagination/shopParams';
 import { FilteringItems } from '../../shared/models/filteringItems';
 import { Book } from '../../shared/models/book';
 
