@@ -93,7 +93,7 @@
         <div class="container xs:max-w-screen-2xl mx-auto bg-white shadow rounded-xl p-6 mb-3">
             <div class="rounded-lg border border-gray-200 bg-white p-4 md:p-8">
                 <h3 class="all-product-subtitle text-xl font-semibold text-gray-900">Latest orders</h3>
-                @if (busyService.loading || orders == null)
+                @if (busyService.loading || orders == null) 
                 {
                 <div class="flex flex-col items-center justify-center w-full col-span-full h-[40vh]">
                     <img src="assets/loading/bookLoading.gif"
@@ -102,10 +102,11 @@
                     <p class="text-center text-gray-500 mt-4 text-lg">Looking for your orders...</p>
                 </div>
                 }
-                @else if (orders) {         
+                @else if (orders.data.length > 0) 
+                {         
                     <!-- Order Item -->
                     @for (order of orders.data; track order.id)
-                    {
+{
                         <app-user-order-item [order]="order"></app-user-order-item>
                     }
 
@@ -114,6 +115,14 @@
                             [pageSize]="paginationParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1"
                             aria-label="Select page" hidePageSize="true">
                         </mat-paginator>
+                    </div>
+                }
+                @else
+                {
+                    <div class="flex flex-col items-center justify-center w-full col-span-full h-[30vh]">
+                        <img src="assets/states/empty_state_2.png" alt="No books found" class="w-64 md:w-74 lg:w-86 max-w-full h-auto">
+                        <p class="text-center text-gray-600 text-lg">No orders found.</p>
+                        <p class="text-center text-gray-600 text-sm">Maybe you should make one?</p>
                     </div>
                 }
                 
