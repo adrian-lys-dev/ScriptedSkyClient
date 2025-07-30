@@ -1,105 +1,126 @@
-<div class="min-h-[70vh]">
-    <!-- User Profile Section -->
-    <div class="container xs:max-w-screen-2xl mx-auto bg-white shadow rounded-xl p-6 mb-3">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-6">
-            <div class="flex items-center space-x-4">
-                <img class="h-20 w-20 rounded-full object-cover"
-                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
-                    alt="User Avatar" />
-                <div>
-                    <div class="flex items-center space-x-2">
-                        <h2 class="text-2xl font-bold text-gray-900">{{ accountService.currentUser()?.firstName + ' ' +
-                            accountService.currentUser()?.lastName }}</h2>
-                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">USER</span>
-                    </div>
-                    <div class="text-gray-600 text-sm">
-                        {{ accountService.currentUser()?.email }}
+@if (busyService.loading && orders == null || orders == null)
+{
+  <div class="bg-white z-50 flex items-center justify-center w-screen h-[80hv] overflow-hidden">
+    <img src="assets/loading/bookLoading.gif"
+        alt="Loading..."
+        class="w-[800px] max-w-none h-auto object-none" />
+  </div>
+}
+
+@if (orders) {
+    <div class="min-h-[70vh]">
+        <!-- User Profile Section -->
+        <div class="container xs:max-w-screen-2xl mx-auto bg-white shadow rounded-xl p-6 mb-3">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-6">
+                <div class="flex items-center space-x-4">
+                    <img class="h-20 w-20 rounded-full object-cover"
+                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
+                        alt="User Avatar" />
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 class="text-2xl font-bold text-gray-900">{{ accountService.currentUser()?.firstName + ' ' +
+                                accountService.currentUser()?.lastName }}</h2>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">USER</span>
+                        </div>
+                        <div class="text-gray-600 text-sm">
+                            {{ accountService.currentUser()?.email }}
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                    <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
+                        <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
+                        </svg>
+                        <span>129</span>
+                    </div>
+
+                    <div class="text-lg font-semibold text-gray-900">Orders made</div>
+                    <div class="text-md text-gray-500">It seems like you read more than you sleep</div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                    <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
+                        <svg class="mb-2 w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
+                            </path>
+                        </svg>
+                        <span>4</span>
+                    </div>
+
+                    <div class="text-lg font-semibold text-gray-900">Orders are coming</div>
+                    <div class="text-md text-gray-500">Most likely, it's an addiction. Well, not bad, right?</div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                    <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
+                        <svg class="mb-2 w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" />
+                        </svg>
+                        <span>94</span>
+                    </div>
+
+                    <div class="text-lg font-semibold text-gray-900">Reviews</div>
+                    <div class="text-md text-gray-500">Should I judge a book by its cover? Better by your review — you’ve got plenty!</div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                    <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
+                        <svg class="mb-2 w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17.4302V15h4.33332M5 17.4302V21h14v-6h-4.3333M5 17.4302c.38672.3365.923.5698 1.66666.5698 2.66664 0 2.66666-3 2.66666-3m5.33338 0H9.33332m5.33338 0s0 3-2.6667 3c-2.66668 0-2.66668-3-2.66668-3m5.33338 0s0 3 2.6666 3c.7437 0 1.28-.2333 1.6667-.5698m-7-9.43017c.1093 0 2-1.11929 2-2.5s-1.9079-2.5-2-2.5c-.0921 0-2 1.11929-2 2.5s1.8947 2.5 2 2.5Zm0 0V11m-6 0v4h12v-4H6Z" />
+                        </svg>
+                        <span>26.07.2025</span>
+                    </div>
+
+                    <div class="text-lg font-semibold text-gray-900">Account created</div>
+                    <div class="text-md text-gray-500">Day one, it almost feels like an eternity, but only the first day</div>
+                </div>
+
+            </div>
+        
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-
-            <div class="bg-gray-50 rounded-lg p-4 text-center">
-                <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
-                    <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
-                    </svg>
-                    <span>129</span>
-                </div>
-
-                <div class="text-lg font-semibold text-gray-900">Orders made</div>
-                <div class="text-md text-gray-500">It seems like you read more than you sleep</div>
-            </div>
-
-            <div class="bg-gray-50 rounded-lg p-4 text-center">
-                <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
-                    <svg class="mb-2 w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
-                        </path>
-                    </svg>
-                    <span>4</span>
-                </div>
-
-                <div class="text-lg font-semibold text-gray-900">Orders are coming</div>
-                <div class="text-md text-gray-500">Most likely, it's an addiction. Well, not bad, right?</div>
-            </div>
-
-            <div class="bg-gray-50 rounded-lg p-4 text-center">
-                <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
-                    <svg class="mb-2 w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" />
-                    </svg>
-                    <span>94</span>
-                </div>
-
-                <div class="text-lg font-semibold text-gray-900">Reviews</div>
-                <div class="text-md text-gray-500">Should I judge a book by its cover? Better by your review — you’ve got plenty!</div>
-            </div>
-
-            <div class="bg-gray-50 rounded-lg p-4 text-center">
-                <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
-                    <svg class="mb-2 w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17.4302V15h4.33332M5 17.4302V21h14v-6h-4.3333M5 17.4302c.38672.3365.923.5698 1.66666.5698 2.66664 0 2.66666-3 2.66666-3m5.33338 0H9.33332m5.33338 0s0 3-2.6667 3c-2.66668 0-2.66668-3-2.66668-3m5.33338 0s0 3 2.6666 3c.7437 0 1.28-.2333 1.6667-.5698m-7-9.43017c.1093 0 2-1.11929 2-2.5s-1.9079-2.5-2-2.5c-.0921 0-2 1.11929-2 2.5s1.8947 2.5 2 2.5Zm0 0V11m-6 0v4h12v-4H6Z" />
-                    </svg>
-                    <span>26.07.2025</span>
-                </div>
-
-                <div class="text-lg font-semibold text-gray-900">Account created</div>
-                <div class="text-md text-gray-500">Day one, it almost feels like an eternity, but only the first day</div>
-            </div>
-
-        </div>
-    
-    </div>
-
-    <!-- Latest Orders Section -->
-    <div class="container xs:max-w-screen-2xl mx-auto bg-white shadow rounded-xl p-6 mb-3">
-        <div class="rounded-lg border border-gray-200 bg-white p-4 md:p-8">
-            <h3 class="all-product-subtitle text-xl font-semibold text-gray-900">Latest orders</h3>
-            @if (orders) {         
-                <!-- Order Item -->
-                @for (order of orders.data; track order.id)
+        <!-- Latest Orders Section -->
+        <div class="container xs:max-w-screen-2xl mx-auto bg-white shadow rounded-xl p-6 mb-3">
+            <div class="rounded-lg border border-gray-200 bg-white p-4 md:p-8">
+                <h3 class="all-product-subtitle text-xl font-semibold text-gray-900">Latest orders</h3>
+                @if (busyService.loading || orders == null)
                 {
-                    <app-user-order-item [order]="order"></app-user-order-item>
+                <div class="flex flex-col items-center justify-center w-full col-span-full h-[40vh]">
+                    <img src="assets/loading/bookLoading.gif"
+                        alt="Loading..."
+                        class="w-64 md:w-80 lg:w-46 max-w-full h-auto object-none" />
+                    <p class="text-center text-gray-500 mt-4 text-lg">Looking for your orders...</p>
+                </div>
                 }
+                @else if (orders) {         
+                    <!-- Order Item -->
+                    @for (order of orders.data; track order.id)
+                    {
+                        <app-user-order-item [order]="order"></app-user-order-item>
+                    }
 
-                        <div class="flex justify-center mt-6">
-            <mat-paginator *ngIf="orders.data.length > 0" (page)="handlePageEvent($event)" [length]="orders.count"
-                [pageSize]="paginationParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1"
-                aria-label="Select page" hidePageSize="true">
-            </mat-paginator>
+                    <div class="flex justify-center mt-6">
+                        <mat-paginator *ngIf="orders.data.length > 0" (page)="handlePageEvent($event)" [length]="orders.count"
+                            [pageSize]="paginationParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1"
+                            aria-label="Select page" hidePageSize="true">
+                        </mat-paginator>
+                    </div>
+                }
+                
+            </div>
+
+
         </div>
-            }
-            
-        </div>
-
-
     </div>
-</div>
+}
+

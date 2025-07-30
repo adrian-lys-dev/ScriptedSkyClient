@@ -7,6 +7,7 @@ import { Order } from '../../../shared/models/order/orderResponse';
 import { Pagination } from '../../../shared/models/pagination/pagination';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { UserOrderItemComponent } from "./user-order-item/user-order-item.component";
+import { BusyService } from '../../../core/services/busy.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,6 +18,7 @@ import { UserOrderItemComponent } from "./user-order-item/user-order-item.compon
 export class UserProfileComponent implements OnInit {
   accountService = inject(AccountService);
   private orderService= inject(OrderService);
+  busyService = inject(BusyService);
 
   paginationParams = new PaginationParams();
   orders?: Pagination<Order>;
