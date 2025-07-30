@@ -13,13 +13,14 @@ import { authGuard } from './core/guards/auth-guard';
 import { guestGuard } from './core/guards/guest-guard';
 import { UserProfileComponent } from './features/account/user-profile/user-profile.component';
 import { CheckoutSuccessComponent } from './features/checkout/checkout-success/checkout-success.component';
+import { emptyCartGuard } from './core/guards/empty-cart-guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'shop/:id', component: BookDetailComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard, emptyCartGuard] },
   { path: 'checkout/checkout-success', component: CheckoutSuccessComponent, canActivate: [authGuard] },
   { path: 'account/login', component: LoginComponent, canActivate: [guestGuard] },
   { path: 'account/register', component: RegisterComponent, canActivate: [guestGuard] },
