@@ -14,7 +14,7 @@
             <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-6">
                 <div class="flex items-center space-x-4">
                     <img class="h-20 w-20 rounded-full object-cover"
-                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
+                        src="{{accountService.currentUser()?.avatar}}"
                         alt="User Avatar" />
                     <div>
                         <div class="flex items-center space-x-2">
@@ -38,7 +38,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
                         </svg>
-                        <span>129</span>
+                        <span>{{userStat?.totalOrders}}</span>
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Orders made</div>
@@ -53,7 +53,7 @@
                                 d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
                             </path>
                         </svg>
-                        <span>4</span>
+                        <span>{{userStat?.activeOrders}}</span>
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Orders are coming</div>
@@ -66,7 +66,7 @@
                             height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" />
                         </svg>
-                        <span>94</span>
+                        <span>{{userStat?.totalReviews}}</span>
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Reviews</div>
@@ -78,7 +78,7 @@
                         <svg class="mb-2 w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17.4302V15h4.33332M5 17.4302V21h14v-6h-4.3333M5 17.4302c.38672.3365.923.5698 1.66666.5698 2.66664 0 2.66666-3 2.66666-3m5.33338 0H9.33332m5.33338 0s0 3-2.6667 3c-2.66668 0-2.66668-3-2.66668-3m5.33338 0s0 3 2.6666 3c.7437 0 1.28-.2333 1.6667-.5698m-7-9.43017c.1093 0 2-1.11929 2-2.5s-1.9079-2.5-2-2.5c-.0921 0-2 1.11929-2 2.5s1.8947 2.5 2 2.5Zm0 0V11m-6 0v4h12v-4H6Z" />
                         </svg>
-                        <span>26.07.2025</span>
+                        <span>{{ userStat?.createdAt | date:'dd.MM.yyyy' }}</span>
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Account created</div>

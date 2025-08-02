@@ -8,6 +8,8 @@ import { Pagination } from '../../../shared/models/pagination/pagination';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { UserOrderItemComponent } from "./user-order-item/user-order-item.component";
 import { BusyService } from '../../../core/services/busy.service';
+import { UserProfileService } from '../../../core/services/user-profile.service';
+import { UserStat } from '../../../shared/models/user/userStat';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,15 +18,27 @@ import { BusyService } from '../../../core/services/busy.service';
   styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements OnInit {
-  accountService = inject(AccountService);
+
   private orderService= inject(OrderService);
+  private userProfileService = inject(UserProfileService);
+
+  accountService = inject(AccountService);
   busyService = inject(BusyService);
 
   paginationParams = new PaginationParams();
   orders?: Pagination<Order>;
+  userStat?: UserStat;
 
   ngOnInit() {
     this.getCurrentUserOrdersList();
+    this.getCurrentUserStat();
+  }
+
+  getCurrentUserStat() {
+    return this.userProfileService.getUserStat().subscribe({
+      next: response => this.userStat = response,
+      error: error => console.error('Error fetching user stats:', error)
+    })
   }
 
   getCurrentUserOrdersList() {

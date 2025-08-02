@@ -107,7 +107,7 @@
             @if (accountService.currentUser()) {
                 <div class="pt-4 border-t border-gray-300">
                     <div class="flex items-center gap-2">
-                        <img routerLink="/account/user-profile" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png" alt="User avatar"
+                        <img routerLink="/account/user-profile" src="{{accountService.currentUser()?.avatar}}" alt="User avatar"
                             class="w-10 h-10 rounded-full" />
                         <div>
                             <p routerLink="/account/user-profile" class="text-base font-semibold text-gray-800">{{accountService.currentUser()?.firstName}}</p>
