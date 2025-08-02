@@ -1,0 +1,29 @@
+<div class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" (click)="closeModal()">
+
+  <div class="bg-white p-6 rounded-lg shadow-lg w-[80vw] max-w-lg" (click)="$event.stopPropagation()">
+
+    <div class="flex justify-between items-center mb-4 border-b border-gray-300 pb-2">
+      <div>
+        <h2 class="text-lg font-bold">Choose your avatar</h2>
+        <p class="text-sm text-gray-400">Choose wisely, new look, new adventures</p>
+      </div>
+      
+      <button (click)="closeModal()" class="cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="fill-gray-500 hover:fill-gray-800" height="24px" viewBox="0 -960 960 960" width="24px">
+          <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <div class="grid grid-cols-2 pm:grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-items-center">
+      @for(avatar of availableAvatars; track avatar.id) 
+      {
+        <div (click)="selectAvatar(avatar)" class="cursor-pointer group">
+          <img [src]="avatar.avatarPath" class="rounded-full w-20 h-20 object-cover border-2 border-transparent group-hover:border-blue-500 transition"/>
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

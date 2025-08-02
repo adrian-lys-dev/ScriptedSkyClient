@@ -10,10 +10,13 @@ import { UserOrderItemComponent } from "./user-order-item/user-order-item.compon
 import { BusyService } from '../../../core/services/busy.service';
 import { UserProfileService } from '../../../core/services/user-profile.service';
 import { UserStat } from '../../../shared/models/user/userStat';
+import { AvatarSelectorComponent } from "./avatar-selector/avatar-selector.component";
+import { Avatar } from '../../../shared/models/user/avatar';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, UserOrderItemComponent, MatPaginator],
+  imports: [CommonModule, UserOrderItemComponent, MatPaginator, AvatarSelectorComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
@@ -21,6 +24,7 @@ export class UserProfileComponent implements OnInit {
 
   private orderService= inject(OrderService);
   private userProfileService = inject(UserProfileService);
+  private snackbar = inject(SnackbarService);
 
   accountService = inject(AccountService);
   busyService = inject(BusyService);
@@ -29,9 +33,46 @@ export class UserProfileComponent implements OnInit {
   orders?: Pagination<Order>;
   userStat?: UserStat;
 
+  avatarModalOpen = false;
+  availableAvatars: Avatar[] = [];
+
+  profileLoading = false;
+
+
   ngOnInit() {
     this.getCurrentUserOrdersList();
     this.getCurrentUserStat();
+    this.getAvailableAvatars();
+  }
+
+  openAvatarModal() {
+    this.avatarModalOpen = true;
+  }
+
+  onAvatarSelected(avatar: Avatar) {
+    const currentUser = this.accountService.currentUser();
+    if (currentUser && currentUser.avatar !== avatar.avatarPath) {
+
+      this.profileLoading = true;
+      
+      this.userProfileService.updateUserAvatar(avatar.id).subscribe({
+        next: () => {
+          currentUser.avatar = avatar.avatarPath;
+          this.profileLoading = false;
+          this.snackbar.success('Your avatar updated successfully!');
+        },
+        error: err => {
+          this.snackbar.success('Something went wrong...');
+        }
+      });
+    }
+  }
+
+  getAvailableAvatars() {
+    this.userProfileService.getAvailableAvatars().subscribe({
+      next: response => this.availableAvatars = response,
+      error: error => console.error('Error fetching available avatars:', error)
+    })
   }
 
   getCurrentUserStat() {
@@ -46,7 +87,6 @@ export class UserProfileComponent implements OnInit {
       next: response => this.orders = response,
       error: error => console.error('Error fetching orders:', error)
     });
-
   }
 
   handlePageEvent(event: PageEvent) {
