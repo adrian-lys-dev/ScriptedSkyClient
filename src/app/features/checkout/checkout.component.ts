@@ -97,6 +97,7 @@ export class CheckoutComponent implements OnInit {
       next: response => {
         this.snackbar.success('Order ' + response.id + ' created successfully. Thank you for your purchase!');
         this.cartService.clearCartLocally();
+        this.cartService.selectedDeliveryMethod.set(null);
         this.router.navigate(['/checkout/checkout-success'], {
           state: { order: response }
         });
