@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AccountService } from '../../../core/services/account.service';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../../core/services/order.service';
@@ -37,7 +37,7 @@ export class UserProfileComponent implements OnInit {
   availableAvatars: Avatar[] = [];
 
   profileLoading = false;
-
+  cancelLoading = false;
 
   ngOnInit() {
     this.getCurrentUserOrdersList();
@@ -93,6 +93,11 @@ export class UserProfileComponent implements OnInit {
     this.paginationParams.PageNumber = event.pageIndex + 1;
     this.paginationParams.PageSize = event.pageSize;
     this.getCurrentUserOrdersList();
+  }
+
+  onOrderLoadingChange(isLoading: boolean) {
+    this.cancelLoading = isLoading;
+    console.log(this.cancelLoading);   
   }
 
 }

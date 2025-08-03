@@ -21,43 +21,57 @@
             <dt class="text-base font-medium text-gray-500">Status:</dt>
             <dd
                 [ngClass]="{
-                    'bg-yellow-100 text-yellow-800': order.status === 'Pending',
-                    'bg-blue-100 text-blue-800': order.status === 'Confirmed',
-                    'bg-green-100 text-green-800': order.status === 'Done',
-                    'bg-red-100 text-red-800': order.status === 'Cancelled'
+                    'bg-yellow-100 text-yellow-800': order.status === 'Pending' && !isCancelling,
+                    'bg-blue-100 text-blue-800': order.status === 'Confirmed' && !isCancelling,
+                    'bg-green-100 text-green-800': order.status === 'Done' && !isCancelling,
+                    'bg-red-100 text-red-800': order.status === 'Cancelled' && !isCancelling,
+                    'bg-gray-100 text-gray-800': isCancelling
                 }"
                 class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-md font-medium">
                 
-                <ng-container [ngSwitch]="order.status">
-                    <!-- Pending -->
-                    <svg *ngSwitchCase="'Pending'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                @if (!isCancelling) {
+                    <ng-container [ngSwitch]="order.status">
+                        <!-- Pending -->
+                        <svg *ngSwitchCase="'Pending'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
 
-                    <!-- Confirmed -->
-                    <svg *ngSwitchCase="'Confirmed'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 13l4 4L19 7" />
-                    </svg>
+                        <!-- Confirmed -->
+                        <svg *ngSwitchCase="'Confirmed'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 13l4 4L19 7" />
+                        </svg>
 
-                    <!-- Done -->
-                    <svg *ngSwitchCase="'Done'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2l4-4M12 22a10 10 0 100-20 10 10 0 000 20z" />
-                    </svg>
+                        <!-- Done -->
+                        <svg *ngSwitchCase="'Done'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2l4-4M12 22a10 10 0 100-20 10 10 0 000 20z" />
+                        </svg>
 
-                    <!-- Cancelled -->
-                    <svg *ngSwitchCase="'Cancelled'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </ng-container>
-                {{ order.status }}
+                        <!-- Cancelled -->
+                        <svg *ngSwitchCase="'Cancelled'" class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </ng-container>
+                    {{ order.status }}
+                }
+                @else 
+                {
+                    <div role="status" class="flex items-center gap-2">
+                        <svg aria-hidden="true" class="w-4 h-4 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591..." fill="currentColor" />
+                            <path d="M93.9676 39.0409C96.393 38.4038..." fill="currentFill" />
+                        </svg>
+                        Loading...
+                    </div>
+                }
+
             </dd>
         </dl>
 
@@ -88,18 +102,21 @@
                                 Order details
                             </a>
                         </li>
-                        <li>
-                            <a
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">
-                                <svg class="me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z">
-                                    </path>
-                                </svg>
-                                Cancel order
-                            </a>
-                        </li>
+                        @if (order.status == "Pending")
+                        {
+                            <li (click)="cancelOrder()">
+                                <a
+                                    class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">
+                                    <svg class="me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z">
+                                        </path>
+                                    </svg>
+                                    Cancel order
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                 </div>
