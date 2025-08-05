@@ -14,6 +14,7 @@ import { guestGuard } from './core/guards/guest-guard';
 import { UserProfileComponent } from './features/account/user-profile/user-profile.component';
 import { CheckoutSuccessComponent } from './features/checkout/checkout-success/checkout-success.component';
 import { emptyCartGuard } from './core/guards/empty-cart-guard';
+import { UserOrderDetailsComponent } from './features/account/user-profile/user-order-details/user-order-details.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'account/login', component: LoginComponent, canActivate: [guestGuard] },
   { path: 'account/register', component: RegisterComponent, canActivate: [guestGuard] },
   { path: 'account/user-profile', component: UserProfileComponent, canActivate: [authGuard] },
+  { path: 'account/user-profile/order/:id', component: UserOrderDetailsComponent, canActivate: [authGuard] },
   { path: 'test-error', component: TestErrorComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },

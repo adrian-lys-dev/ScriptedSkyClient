@@ -2,10 +2,11 @@ import { Component, EventEmitter, HostListener, inject, Input, Output } from '@a
 import { Order } from '../../../../shared/models/order/orderResponse';
 import { CommonModule, DatePipe } from '@angular/common';
 import { UserProfileService } from '../../../../core/services/user-profile.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-order-item',
-  imports: [DatePipe, CommonModule],
+  imports: [DatePipe, CommonModule, RouterLink],
   templateUrl: './user-order-item.component.html',
   styleUrl: './user-order-item.component.scss'
 })
