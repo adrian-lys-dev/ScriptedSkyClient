@@ -97,7 +97,6 @@ export class UserProfileComponent implements OnInit {
 
   onOrderLoadingChange(isLoading: boolean) {
     this.cancelLoading = isLoading;
-    console.log(this.cancelLoading);
   }
 
   getOrdersMadeComment(count?: number): string {
