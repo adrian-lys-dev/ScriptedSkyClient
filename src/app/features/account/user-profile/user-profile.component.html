@@ -62,7 +62,7 @@
 
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
                     <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
-                        <svg class="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        <svg class="mb-2 w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
@@ -71,12 +71,12 @@
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Orders made</div>
-                    <div class="text-md text-gray-500">It seems like you read more than you sleep</div>
+                    <div class="text-md text-gray-500">{{ getOrdersMadeComment(userStat?.totalOrders) }}</div>
                 </div>
 
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
                     <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
-                        <svg class="mb-2 w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                        <svg class="mb-2 w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
@@ -86,12 +86,12 @@
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Orders are coming</div>
-                    <div class="text-md text-gray-500">Most likely, it's an addiction. Well, not bad, right?</div>
+                    <div class="text-md text-gray-500">{{ getActiveOrdersComment(userStat?.activeOrders) }}</div>
                 </div>
 
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
                     <div class="flex items-center justify-center text-blue-600 text-2xl font-bold space-x-2">
-                        <svg class="mb-2 w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                        <svg class="mb-2 w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" />
                         </svg>
@@ -99,7 +99,7 @@
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Reviews</div>
-                    <div class="text-md text-gray-500">Should I judge a book by its cover? Better by your review — you’ve got plenty!</div>
+                    <div class="text-md text-gray-500">{{ getReviewsComment(userStat?.totalReviews) }}</div>
                 </div>
 
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
@@ -111,7 +111,7 @@
                     </div>
 
                     <div class="text-lg font-semibold text-gray-900">Account created</div>
-                    <div class="text-md text-gray-500">Day one, it almost feels like an eternity, but only the first day</div>
+                    <div class="text-md text-gray-500">{{ getAccountAgeComment(userStat?.createdAt) }}</div>
                 </div>
 
             </div>
