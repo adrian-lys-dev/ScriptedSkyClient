@@ -20,6 +20,7 @@ export type DeliveryMethod = {
 export type OrderItem = {
   bookId: number
   title: string
+  pictureURL: string
   price: number
   quantity: number
 }

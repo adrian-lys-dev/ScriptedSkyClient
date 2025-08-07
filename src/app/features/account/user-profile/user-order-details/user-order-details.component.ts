@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Order } from '../../../../shared/models/order/orderResponse';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UserProfileService } from '../../../../core/services/user-profile.service';
 import { CommonModule } from '@angular/common';
 import { BusyService } from '../../../../core/services/busy.service';
 
 @Component({
   selector: 'app-user-order-details',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './user-order-details.component.html',
   styleUrl: './user-order-details.component.scss'
 })
