@@ -2,14 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ShopService } from '../../../core/services/shop.service';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '../../../shared/models/book';
-import { DatePipe } from '@angular/common';
 import { BusyService } from '../../../core/services/busy.service';
 import { CartService } from '../../../core/services/cart.service';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-detail',
-  imports: [DatePipe, FormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.scss'
 })
@@ -19,12 +19,21 @@ export class BookDetailComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private cartService = inject(CartService);
   busyService = inject(BusyService);
-  
+
+  private fb = inject(FormBuilder);
+
   book?: Book;
   quantityInCart = 0;
   quantity = 1;
+  rating = 0;
+  hoverRating = 0;
 
   readonly stars = [0, 1, 2, 3, 4];
+
+  reviewForm = this.fb.group({
+    review: ['', [Validators.required, Validators.maxLength(800)]],
+    rating: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+  });
 
   ngOnInit(): void {
     this.loadBook();
@@ -39,8 +48,9 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
+  // Cart
   updateCart() {
-    if(!this.book) return;
+    if (!this.book) return;
     if (this.quantity > this.quantityInCart) {
       const itemsToAdd = this.quantity - this.quantityInCart;
       this.quantityInCart += itemsToAdd;
@@ -54,10 +64,41 @@ export class BookDetailComponent implements OnInit {
 
   updateQuantity() {
     this.quantityInCart = this.cartService.cart()?.items
-    .find(item => item.bookId === this.book?.id)?.quantity || 0;
+      .find(item => item.bookId === this.book?.id)?.quantity || 0;
   }
 
   getButtonText() {
     return this.quantityInCart ? 'Update Cart' : 'Add to Cart';
+  }
+
+  // Rating and Review
+  submitReview() {
+    if (this.reviewForm.invalid) {
+      this.reviewForm.markAllAsTouched();
+      return;
+    }
+
+    const reviewValue = this.reviewForm.value.review;
+    console.log(this.reviewForm.value);
+
+    this.setRating(0);
+    this.reviewForm.reset();
+  }
+
+  setRating(value: number) {
+    this.rating = value;
+    this.reviewForm.patchValue({ rating: value });
+  }
+
+  setHover(value: number) {
+    this.hoverRating = value;
+  }
+
+  clearHover() {
+    this.hoverRating = 0;
+  }
+
+  get reviewLength(): number {
+    return this.reviewForm.get('review')?.value?.length ?? 0;
   }
 }
