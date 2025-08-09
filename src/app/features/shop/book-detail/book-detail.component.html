@@ -156,7 +156,8 @@
                 <div class="py-2 px-4 mb-2 bg-white rounded-lg rounded-t-lg border border-gray-200">
                     <label for="review" class="sr-only"></label>
                     <textarea id="review" formControlName="review" rows="6" class="px-0 w-full text-base text-gray-500 border-0 focus:ring-0 focus:outline-none" 
-                        placeholder="Help others decide — drop your honest review." maxlength="800"></textarea>
+                          [placeholder]="hasUserReviewed ? 'You have already submitted a review. Update or delete the previous one.' : 'Help others decide — drop your honest review.'" maxlength="800" 
+                          [readonly]="hasUserReviewed" ></textarea>
                 </div>
 
                 <div class="flex items-center justify-between">

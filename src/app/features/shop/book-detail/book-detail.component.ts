@@ -223,6 +223,16 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
+  get hasUserReviewed(): boolean {
+    const currentUserId = this.accountService.currentUser()?.id;
+    if (!currentUserId || !this.reviews?.data) return false;
+
+    console.log('test');
+    
+
+    return this.reviews.data.some(review => review.userId === currentUserId);
+  }
+
   get reviewLength(): number {
     return this.reviewForm.get('review')?.value?.length ?? 0;
   }
