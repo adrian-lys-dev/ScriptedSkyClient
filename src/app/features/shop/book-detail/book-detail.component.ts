@@ -47,6 +47,8 @@ export class BookDetailComponent implements OnInit {
   paginationParams = new PaginationParams();
   reviews?: Pagination<Review>;
 
+  ReviewLoading = false;
+
   readonly stars = [0, 1, 2, 3, 4];
 
   reviewForm = this.fb.group({
@@ -77,9 +79,16 @@ export class BookDetailComponent implements OnInit {
     const id = this.bookId;
     if (!id) return;
     this.reviewService.getBookReviews(this.paginationParams, id).subscribe({
-      next: response => this.reviews = response,
-      error: error => console.error('Error fetching reviews:', error)
+      next: response => {
+        this.reviews = response,
+        this.ReviewLoading = false;
+      },
+      error: error => {
+        console.error('Error fetching reviews:', error),
+        this.ReviewLoading = false;
+      }
     });
+    
   }
 
   handlePageEvent(event: PageEvent) {
@@ -124,6 +133,8 @@ export class BookDetailComponent implements OnInit {
 
   onEditReviewSaved(updatedData: { rating: number; reviewText: string; reviewId?: number }) {
 
+    this.ReviewLoading = true;
+
     const review: ReviewDto = {
       reviewText: updatedData.reviewText,
       rating: updatedData.rating,
@@ -134,12 +145,12 @@ export class BookDetailComponent implements OnInit {
     this.reviewService.updateReview(review, updatedData.reviewId!).subscribe({
       next: () => {
         this.loadReviews();
-        this.closeEditReviewModal();
         this.updateBookRating();
         this.snackbar.success('Review saved successfully. Thank you for sharing your updated opinion!');
       },
       error: (error) => {
         this.snackbar.error('Failed to update the review');
+        this.ReviewLoading = false;
       }
     });
   }
@@ -149,6 +160,8 @@ export class BookDetailComponent implements OnInit {
       this.reviewForm.markAllAsTouched();
       return;
     }
+
+    this.ReviewLoading = true;
 
     const review: ReviewDto = {
       reviewText: this.reviewForm.value.review!,
@@ -163,15 +176,18 @@ export class BookDetailComponent implements OnInit {
         this.reviewForm.reset();
         this.loadReviews();
         this.updateBookRating();
+        
         this.snackbar.success('Thanks for sharing your thoughts! The book thanks you too :)');
       },
       error: (error) => {
+        this.ReviewLoading = false;
         this.snackbar.error('Failed to create the review');
       }
     })
   }
 
   deleteReview(id: number) {
+    this.ReviewLoading = true;
     this.reviewService.deleteReview(id).subscribe({
       next: () => {
         this.loadReviews();
@@ -180,6 +196,7 @@ export class BookDetailComponent implements OnInit {
       },
       error: error => {
         this.snackbar.error('Failed to delete the review!');
+        this.ReviewLoading = false;
       }
     })
   }

@@ -175,70 +175,93 @@
             </form>
 
             <div class="flex flex-col items-start gap-4 mb-8">
-                @for (review of reviews?.data; track review.id) {
-                    <article class="p-6 text-base bg-white rounded-lg w-full">
-                        <div class="flex justify-between items-center mb-2">
-                            <div class="flex flex-col">
-                                <div class="flex items-center">
-                                    <img class="mr-2 w-8 h-8 rounded-full"
-                                        src="{{review.avatarPath}}"
-                                        alt="Michael Gough">
-                                    <p class="text-sm text-gray-900 font-semibold">{{review.userName}}</p>
-                                </div>
-                                <p class="flex items-center text-sm text-gray-600 mt-2 gap-3">
-                                    
-                                    <span class="flex items-center">
-                                        <svg class="w-4 h-4 text-gray-800 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
-                                        </svg>
-                                        {{ review.createdAt | date:'d MMMM y' }}
-                                    </span>
+                @if(ReviewLoading) {
+                    <div class="flex flex-col items-center w-full max-w-2xl mx-auto p-4">
+                        <div class="w-full h-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 14 32 4" fill="hsl(228, 97%, 42%)" preserveAspectRatio="none" class="w-full h-full">
+                            <path opacity="0.8" transform="translate(0 0)" d="M2 14 V18 H6 V14z">
+                                <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/>
+                            </path>
+                            <path opacity="0.5" transform="translate(0 0)" d="M0 14 V18 H8 V14z">
+                                <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0.1s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/>
+                            </path>
+                            <path opacity="0.25" transform="translate(0 0)" d="M0 14 V18 H8 V14z">
+                                <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0.2s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/>
+                            </path>
+                            </svg>
+                        </div>
 
-                                    <span class="flex items-center">
-                                        <svg class="w-4 h-4 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.39 2.46a1 1 0 00-.364 1.118l1.287 3.971c.3.921-.755 1.688-1.54 1.118l-3.39-2.46a1 1 0 00-1.175 0l-3.39 2.46c-.784.57-1.838-.197-1.539-1.118l1.287-3.97a1 1 0 00-.364-1.119l-3.39-2.46c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.951-.69l1.286-3.97z"/>
-                                        </svg>
-                                        {{ review.rating }}
-                                    </span>
-                                </p>
+                        <p class="mt-3 text-base text-center text-gray-600">
+                            Collecting reader magic... don’t blink!
+                        </p>
+                    </div>
+                }
+                @else {
+                    @for (review of reviews?.data; track review.id) {
+                        <article class="p-6 text-base bg-white rounded-lg w-full">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex flex-col">
+                                    <div class="flex items-center">
+                                        <img class="mr-2 w-8 h-8 rounded-full"
+                                            src="{{review.avatarPath}}"
+                                            alt="Michael Gough">
+                                        <p class="text-sm text-gray-900 font-semibold">{{review.userName}}</p>
+                                    </div>
+                                    <p class="flex items-center text-sm text-gray-600 mt-2 gap-3">
+                                        
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 text-gray-800 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+                                            </svg>
+                                            {{ review.createdAt | date:'d MMMM y' }}
+                                        </span>
+
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.39 2.46a1 1 0 00-.364 1.118l1.287 3.971c.3.921-.755 1.688-1.54 1.118l-3.39-2.46a1 1 0 00-1.175 0l-3.39 2.46c-.784.57-1.838-.197-1.539-1.118l1.287-3.97a1 1 0 00-.364-1.119l-3.39-2.46c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.951-.69l1.286-3.97z"/>
+                                            </svg>
+                                            {{ review.rating }}
+                                        </span>
+                                    </p>
+
+                                </div>
+
+                                @if (this.accountService.currentUser()?.id == review.userId) {
+                                    <div>
+                                        <button (click)="openEditReviewModal(review)" class="cursor-pointer inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100" type="button">            
+                                            <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                            </svg>
+                                        </button>
+
+                                        <button (click)="deleteReview(review.id)" class="cursor-pointer inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100" type="button">            
+                                            <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                            </svg>
+                                        </button>
+
+                                    </div>
+                                }
+
 
                             </div>
+                            <p class="text-gray-500">
+                                {{review.reviewText}}
+                            </p>
+                        </article>
+                    }
 
-                            @if (this.accountService.currentUser()?.id == review.userId) {
-                                <div>
-                                    <button (click)="openEditReviewModal(review)" class="cursor-pointer inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100" type="button">            
-                                        <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                                        </svg>
-                                    </button>
-
-                                    <button (click)="deleteReview(review.id)" class="cursor-pointer inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100" type="button">            
-                                        <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-                                        </svg>
-                                    </button>
-
-                                </div>
-                            }
-
-
+                    @if(reviews) {
+                        <div class="flex justify-center mt-6 w-full">
+                            <mat-paginator (page)="handlePageEvent($event)" [length]="reviews.count"
+                                [pageSize]="paginationParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1"
+                                aria-label="Select page" hidePageSize="true">
+                            </mat-paginator>
                         </div>
-                        <p class="text-gray-500">
-                            {{review.reviewText}}
-                        </p>
-                    </article>
-                }
-
-                @if(reviews) {
-                    <div class="flex justify-center mt-6 w-full">
-                        <mat-paginator (page)="handlePageEvent($event)" [length]="reviews.count"
-                            [pageSize]="paginationParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1"
-                            aria-label="Select page" hidePageSize="true">
-                        </mat-paginator>
-                    </div>
+                    }
                 }
 
             </div>

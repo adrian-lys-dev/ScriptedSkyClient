@@ -55,6 +55,7 @@ export class EditReviewComponent implements OnInit {
         reviewText: this.reviewForm.get('review')?.value ?? '',
         reviewId: this.review?.id
       };
+      this.onCancel();
       this.saved.emit(updatedData);
     }
   }
