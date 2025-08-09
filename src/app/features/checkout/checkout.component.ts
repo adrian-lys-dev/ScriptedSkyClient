@@ -10,10 +10,11 @@ import { BusyService } from '../../core/services/busy.service';
 import { Router } from '@angular/router';
 import { CreateOrder } from '../../shared/models/order/createOrder';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { LoadingMainComponent } from "../../shared/components/loading-main/loading-main.component";
 
 @Component({
   selector: 'app-checkout',
-  imports: [OrderSummaryComponent, TextInputComponent, ReactiveFormsModule, MatRadioModule],
+  imports: [OrderSummaryComponent, TextInputComponent, ReactiveFormsModule, MatRadioModule, LoadingMainComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
 })

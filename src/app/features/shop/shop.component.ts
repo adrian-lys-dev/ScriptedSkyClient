@@ -12,10 +12,11 @@ import { FilterComponent } from './filters/filters.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BusyService } from '../../core/services/busy.service';
+import { LoadingMainComponent } from '../../shared/components/loading-main/loading-main.component';
 
 @Component({
   selector: 'app-shop',
-  imports: [BookItemComponent, FormsModule, CommonModule, FilterComponent, MatPaginator, MatProgressSpinnerModule],
+  imports: [BookItemComponent, FormsModule, CommonModule, FilterComponent, MatPaginator, MatProgressSpinnerModule, LoadingMainComponent],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
 })

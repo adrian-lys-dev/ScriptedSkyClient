@@ -4,10 +4,11 @@ import { CartItemComponent } from "./cart-item/cart-item.component";
 import { RouterLink } from '@angular/router';
 import { OrderSummaryComponent } from "../../shared/components/order-summary/order-summary.component";
 import { BusyService } from '../../core/services/busy.service';
+import { LoadingMainComponent } from "../../shared/components/loading-main/loading-main.component";
 
 @Component({
   selector: 'app-cart',
-  imports: [CartItemComponent, RouterLink, OrderSummaryComponent],
+  imports: [CartItemComponent, RouterLink, OrderSummaryComponent, LoadingMainComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })

@@ -13,10 +13,11 @@ import { UserStat } from '../../../shared/models/user/userStat';
 import { AvatarSelectorComponent } from "./avatar-selector/avatar-selector.component";
 import { Avatar } from '../../../shared/models/user/avatar';
 import { SnackbarService } from '../../../core/services/snackbar.service';
+import { LoadingMainComponent } from "../../../shared/components/loading-main/loading-main.component";
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, UserOrderItemComponent, MatPaginator, AvatarSelectorComponent],
+  imports: [CommonModule, UserOrderItemComponent, MatPaginator, AvatarSelectorComponent, LoadingMainComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })

@@ -15,10 +15,11 @@ import { AccountService } from '../../../core/services/account.service';
 import { ReviewDto } from '../../../shared/models/review/reviewDto';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 import { EditReviewComponent } from "./edit-review/edit-review.component";
+import { LoadingMainComponent } from "../../../shared/components/loading-main/loading-main.component";
 
 @Component({
   selector: 'app-book-detail',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatPaginator, EditReviewComponent],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatPaginator, EditReviewComponent, LoadingMainComponent],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.scss'
 })

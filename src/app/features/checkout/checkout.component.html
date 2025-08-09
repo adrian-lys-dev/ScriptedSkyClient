@@ -1,8 +1,6 @@
 @if (busyService.loading)
 {
-    <div class="bg-white z-50 flex items-center justify-center w-screen h-[70vh] overflow-hidden">
-        <img src="assets/loading/bookLoading.gif" alt="Loading..." class="w-[800px] max-w-none h-auto object-none" />
-    </div>
+    <app-loading-main></app-loading-main>
 }
 @else {
     <div class="container xs:max-w-screen-2xl mx-auto border-t border-gray-300 py-3 px-4 sm:px-6 md:px-8 lg:px-6 xl:px-2 min-h-[70vh]">

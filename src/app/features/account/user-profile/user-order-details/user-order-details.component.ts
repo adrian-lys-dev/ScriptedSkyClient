@@ -4,10 +4,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UserProfileService } from '../../../../core/services/user-profile.service';
 import { CommonModule } from '@angular/common';
 import { BusyService } from '../../../../core/services/busy.service';
+import { LoadingMainComponent } from "../../../../shared/components/loading-main/loading-main.component";
 
 @Component({
   selector: 'app-user-order-details',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, LoadingMainComponent],
   templateUrl: './user-order-details.component.html',
   styleUrl: './user-order-details.component.scss'
 })
