@@ -175,13 +175,13 @@
             </form>
 
             <div class="flex flex-col items-start gap-4 mb-8">
-                @for (review of book.reviews; track review.id) {
+                @for (review of reviews?.data; track review.id) {
                     <article class="p-6 text-base bg-white rounded-lg w-full">
                         <div class="flex justify-between items-center mb-2">
                             <div class="flex flex-col">
                                 <div class="flex items-center">
-                                    <img class="mr-2 w-6 h-6 rounded-full"
-                                        src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                                    <img class="mr-2 w-8 h-8 rounded-full"
+                                        src="{{review.avatarPath}}"
                                         alt="Michael Gough">
                                     <p class="text-sm text-gray-900 font-semibold">{{review.userName}}</p>
                                 </div>
@@ -229,7 +229,14 @@
                     </article>
                 }
 
-
+                @if(reviews) {
+                    <div class="flex justify-center mt-6 w-full">
+                        <mat-paginator (page)="handlePageEvent($event)" [length]="reviews.count"
+                            [pageSize]="paginationParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1"
+                            aria-label="Select page" hidePageSize="true">
+                        </mat-paginator>
+                    </div>
+                }
 
             </div>
        

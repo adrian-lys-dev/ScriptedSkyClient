@@ -1,7 +1,6 @@
 import { Author } from "./author";
 import { Genre } from "./genre";
 import { Publisher } from "./publisher";
-import { Review } from "./review";
 
 export type Book = {
   id: number;
@@ -17,5 +16,4 @@ export type Book = {
   genre: Genre[];
   author: Author[];
   publisher: Publisher;
-  reviews: Review[];
 }

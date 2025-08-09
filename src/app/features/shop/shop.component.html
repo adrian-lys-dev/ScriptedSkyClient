@@ -150,7 +150,7 @@
           @if (!busyService.loading)
           {
             <div class="flex justify-center mt-6">
-              <mat-paginator *ngIf="books.data.length > 0" (page)="handlePageEvent($event)" [length]="books.count"
+              <mat-paginator (page)="handlePageEvent($event)" [length]="books.count"
                 [pageSize]="shopParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="shopParams.PageNumber - 1"
                 aria-label="Select page" hidePageSize="true">
               </mat-paginator>

@@ -5,6 +5,8 @@ import { CatalogBook } from '../../shared/models/catalogBook';
 import { ShopParams } from '../../shared/models/pagination/shopParams';
 import { FilteringItems } from '../../shared/models/filteringItems';
 import { Book } from '../../shared/models/book';
+import { PaginationParams } from '../../shared/models/pagination/paginationParams';
+import { Review } from '../../shared/models/review';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +52,16 @@ export class ShopService {
 
   getBook(id: number) {
     return this.http.get<Book>(this.baseUrl + 'book/' + id);
+  }
+
+  getBookReviews(paginationParams: PaginationParams, id: number) {
+
+    let params = new HttpParams();
+
+    params = params.append('pageSize', paginationParams.PageSize);
+    params = params.append('pageIndex', paginationParams.PageNumber);
+
+    return this.http.get<Pagination<Review>>(this.baseUrl + 'review/book/' + id, { params });
   }
 
   getGenres() {

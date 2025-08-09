@@ -6,10 +6,14 @@ import { BusyService } from '../../../core/services/busy.service';
 import { CartService } from '../../../core/services/cart.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PaginationParams } from '../../../shared/models/pagination/paginationParams';
+import { Pagination } from '../../../shared/models/pagination/pagination';
+import { Review } from '../../../shared/models/review';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-book-detail',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatPaginator],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.scss'
 })
@@ -28,6 +32,9 @@ export class BookDetailComponent implements OnInit {
   rating = 0;
   hoverRating = 0;
 
+  paginationParams = new PaginationParams();
+  reviews?: Pagination<Review>;
+
   readonly stars = [0, 1, 2, 3, 4];
 
   reviewForm = this.fb.group({
@@ -37,15 +44,36 @@ export class BookDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBook();
+    this.loadReviews()
+  }
+
+  private get bookId(): number | null {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    return id ? +id : null;
   }
 
   loadBook() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    const id = this.bookId;
     if (!id) return;
-    this.shopService.getBook(+id).subscribe({
+    this.shopService.getBook(id).subscribe({
       next: book => this.book = book,
       error: error => console.error('Error loading book:', error)
     });
+  }
+
+  loadReviews() {
+    const id = this.bookId;
+    if (!id) return;
+    this.shopService.getBookReviews(this.paginationParams, id).subscribe({
+      next: response => this.reviews = response,
+      error: error => console.error('Error fetching reviews:', error)
+    });
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.paginationParams.PageNumber = event.pageIndex + 1;
+    this.paginationParams.PageSize = event.pageSize;
+    this.loadReviews();
   }
 
   // Cart

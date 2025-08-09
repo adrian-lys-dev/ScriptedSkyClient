@@ -140,7 +140,7 @@
                     }
 
                     <div class="flex justify-center mt-6">
-                        <mat-paginator *ngIf="orders.data.length > 0" (page)="handlePageEvent($event)" [length]="orders.count"
+                        <mat-paginator (page)="handlePageEvent($event)" [length]="orders.count"
                             [pageSize]="paginationParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1"
                             aria-label="Select page" hidePageSize="true">
                         </mat-paginator>
