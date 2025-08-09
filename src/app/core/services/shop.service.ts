@@ -6,13 +6,14 @@ import { ShopParams } from '../../shared/models/pagination/shopParams';
 import { FilteringItems } from '../../shared/models/filteringItems';
 import { Book } from '../../shared/models/book';
 import { PaginationParams } from '../../shared/models/pagination/paginationParams';
-import { Review } from '../../shared/models/review';
+import { Review } from '../../shared/models/review/review';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  baseUrl = 'https://localhost:7217/api/';
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
   getBooks(shopParams: ShopParams) {
@@ -54,14 +55,8 @@ export class ShopService {
     return this.http.get<Book>(this.baseUrl + 'book/' + id);
   }
 
-  getBookReviews(paginationParams: PaginationParams, id: number) {
-
-    let params = new HttpParams();
-
-    params = params.append('pageSize', paginationParams.PageSize);
-    params = params.append('pageIndex', paginationParams.PageNumber);
-
-    return this.http.get<Pagination<Review>>(this.baseUrl + 'review/book/' + id, { params });
+  getBookRating(id: number) {
+    return this.http.get<number>(this.baseUrl + 'book/' + id + '/rating');
   }
 
   getGenres() {

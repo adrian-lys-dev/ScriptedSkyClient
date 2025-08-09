@@ -8,23 +8,35 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { CommonModule } from '@angular/common';
 import { PaginationParams } from '../../../shared/models/pagination/paginationParams';
 import { Pagination } from '../../../shared/models/pagination/pagination';
-import { Review } from '../../../shared/models/review';
+import { Review } from '../../../shared/models/review/review';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ReviewService } from '../../../core/services/review.service';
+import { AccountService } from '../../../core/services/account.service';
+import { ReviewDto } from '../../../shared/models/review/reviewDto';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { EditReviewComponent } from "./edit-review/edit-review.component";
 
 @Component({
   selector: 'app-book-detail',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatPaginator],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatPaginator, EditReviewComponent],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.scss'
 })
 export class BookDetailComponent implements OnInit {
 
   private shopService = inject(ShopService);
-  private activatedRoute = inject(ActivatedRoute);
   private cartService = inject(CartService);
+  private reviewService = inject(ReviewService);
+  private snackbar = inject(SnackbarService);
+
+  private activatedRoute = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
+
+  accountService = inject(AccountService);
   busyService = inject(BusyService);
 
-  private fb = inject(FormBuilder);
+  editReviewModalOpen = false;
+  reviewToEdit?: Review;
 
   book?: Book;
   quantityInCart = 0;
@@ -64,7 +76,7 @@ export class BookDetailComponent implements OnInit {
   loadReviews() {
     const id = this.bookId;
     if (!id) return;
-    this.shopService.getBookReviews(this.paginationParams, id).subscribe({
+    this.reviewService.getBookReviews(this.paginationParams, id).subscribe({
       next: response => this.reviews = response,
       error: error => console.error('Error fetching reviews:', error)
     });
@@ -100,17 +112,76 @@ export class BookDetailComponent implements OnInit {
   }
 
   // Rating and Review
+  openEditReviewModal(review: Review) {
+    this.reviewToEdit = review;
+    this.editReviewModalOpen = true;
+  }
+
+  closeEditReviewModal() {
+    this.editReviewModalOpen = false;
+    this.reviewToEdit = undefined;
+  }
+
+  onEditReviewSaved(updatedData: { rating: number; reviewText: string; reviewId?: number }) {
+
+    const review: ReviewDto = {
+      reviewText: updatedData.reviewText,
+      rating: updatedData.rating,
+      bookId: this.bookId!,
+      userId: this.accountService.currentUser()?.id!
+    };
+
+    this.reviewService.updateReview(review, updatedData.reviewId!).subscribe({
+      next: () => {
+        this.loadReviews();
+        this.closeEditReviewModal();
+        this.updateBookRating();
+        this.snackbar.success('Review saved successfully. Thank you for sharing your updated opinion!');
+      },
+      error: (error) => {
+        this.snackbar.error('Failed to update the review');
+      }
+    });
+  }
+
   submitReview() {
     if (this.reviewForm.invalid) {
       this.reviewForm.markAllAsTouched();
       return;
     }
 
-    const reviewValue = this.reviewForm.value.review;
-    console.log(this.reviewForm.value);
+    const review: ReviewDto = {
+      reviewText: this.reviewForm.value.review!,
+      rating: this.reviewForm.value.rating!,
+      bookId: this.bookId!,
+      userId: this.accountService.currentUser()?.id!
+    };
 
-    this.setRating(0);
-    this.reviewForm.reset();
+    this.reviewService.postReview(review).subscribe({
+      next: () => {
+        this.setRating(0);
+        this.reviewForm.reset();
+        this.loadReviews();
+        this.updateBookRating();
+        this.snackbar.success('Thanks for sharing your thoughts! The book thanks you too :)');
+      },
+      error: (error) => {
+        this.snackbar.error('Failed to create the review');
+      }
+    })
+  }
+
+  deleteReview(id: number) {
+    this.reviewService.deleteReview(id).subscribe({
+      next: () => {
+        this.loadReviews();
+        this.updateBookRating();
+        this.snackbar.success('Review deleted successfully!');
+      },
+      error: error => {
+        this.snackbar.error('Failed to delete the review!');
+      }
+    })
   }
 
   setRating(value: number) {
@@ -124,6 +195,14 @@ export class BookDetailComponent implements OnInit {
 
   clearHover() {
     this.hoverRating = 0;
+  }
+
+  updateBookRating() {
+    if (!this.bookId || !this.book) return;
+
+    this.shopService.getBookRating(this.bookId).subscribe({
+      next: rating => this.book!.rating = rating
+    });
   }
 
   get reviewLength(): number {

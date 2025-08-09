@@ -1,0 +1,40 @@
+<div class="bg-white rounded-lg p-6 max-w-lg w-full shadow-lg min-w-[70vw]">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Edit Review</h2>
+        <button (click)="onCancel()"
+            class="text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none cursor-pointer">&times;</button>
+    </div>
+
+    <form class="mb-6" [formGroup]="reviewForm" (ngSubmit)="SubmitUpdatedReview()">
+        <div class="flex items-center mb-2 space-x-3">
+            <span class="text-base font-medium">Choose your rating:</span>
+    
+            <div class="flex space-x-1 cursor-pointer" (mouseleave)="clearHover()">
+                <button type="button" *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)"
+                    (mouseenter)="setHover(star)" class="text-3xl focus:outline-none cursor-pointer"
+                    [class.text-yellow-400]="star <= (hoverRating || rating)"
+                    [class.text-gray-300]="star > (hoverRating || rating)">
+                    ★
+                </button>
+            </div>
+        </div>
+    
+        <div class="py-2 px-4 mb-2 bg-white rounded-lg rounded-t-lg border border-gray-200">
+            <label for="review" class="sr-only"></label>
+            <textarea id="review" formControlName="review" rows="6"
+                class="px-0 w-full text-base text-gray-500 border-0 focus:ring-0 focus:outline-none"
+                placeholder="Help others decide — drop your honest review." maxlength="800"></textarea>
+        </div>
+    
+        <div class="flex items-center justify-between">
+    
+            <p class="text-sm text-gray-500 ml-2">{{ reviewLength }} / 800</p>
+    
+            <button type="submit" [disabled]="reviewForm.invalid || isUnchanged()"
+                class="cursor-pointer inline-flex items-center py-2.5 px-4 text-base font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800 disabled:opacity-50">
+                Update Review
+            </button>
+        </div>
+    </form>
+
+</div>
