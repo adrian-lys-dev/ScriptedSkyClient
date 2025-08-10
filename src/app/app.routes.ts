@@ -6,9 +6,11 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
 import { BookDetailComponent } from './features/shop/book-detail/book-detail.component';
 import { CartComponent } from './features/cart/cart.component';
+import { ContactsComponent } from './features/contacts/contacts.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'contacts', component: ContactsComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'shop/:id', component: BookDetailComponent },
   { path: 'cart', component: CartComponent },
