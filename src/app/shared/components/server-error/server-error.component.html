@@ -1,19 +1,20 @@
-<div class="container mx-auto">
-  <div class="container mt-5 p-4 bg-gray-100 rounded shadow-lg">
-    <h1 class="text-2xl font-semibold mb-4">Internal Server Error</h1>
-    @if (error) {
-    <h5 class="text-red-600">Error: {{error.message}}</h5>
-    <p class="font-bold mb-2">This error comes from the server, not Angular</p>
-    <p class="mb-2">What to do next?</p>
-    <ol class="list-decimal ml-5 mb-4">
-      <li class="mb-1">Check the network tab in chrome dev tools</li>
-      <li class="mb-1">Reproduce the error in postman.
-        If same error, don't waste time troubleshooting angular code.</li>
-    </ol>
-    <h5 class="text-lg font-semibold mb-2">Stack trace</h5>
-    <mat-card class="p-4 bg-white">
-      <code class="block whitespace-pre-wrap">{{error.details}}</code>
-    </mat-card>
-    }
+<div class="flex flex-col items-center justify-center bg-gray-50 px-4 min-h-[80vh]">
+  <div class="max-w-sm text-center">
+    <img src="assets/errors/500_error.png" alt="500 Not Found" class="mx-auto select-none"
+      draggable="false" />
+
+    <h1 class="text-4xl font-extrabold text-gray-900 mb-3">Internal Server Error</h1>
+    <p class="text-gray-600">
+      Oops! Something went wrong on our end. Please try again later.
+    </p>
+    <p class="text-red-600 mb-8">Error: {{error.message}}</p>
+
+    <button routerLink="/shop"
+      class="mb-5 inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold 
+             py-3 px-8 rounded-lg shadow-md transition focus:outline-none focus:ring-2
+            focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
+      aria-label="Back to shop">
+      ← Back to Shop
+    </button>
   </div>
 </div>

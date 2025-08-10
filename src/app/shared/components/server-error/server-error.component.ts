@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { MatCard } from '@angular/material/card';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-server-error',
   standalone: true,
-  imports: [
-    MatCard
-  ],
+  imports: [RouterLink],
   templateUrl: './server-error.component.html',
   styleUrl: './server-error.component.scss'
 })
@@ -17,6 +14,5 @@ export class ServerErrorComponent {
   constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
     this.error = navigation?.extras.state?.['error'];
-
   }
 }
