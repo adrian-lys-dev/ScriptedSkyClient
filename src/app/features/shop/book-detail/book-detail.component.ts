@@ -226,14 +226,21 @@ export class BookDetailComponent implements OnInit {
   get hasUserReviewed(): boolean {
     const currentUserId = this.accountService.currentUser()?.id;
     if (!currentUserId || !this.reviews?.data) return false;
-
-    console.log('test');
-    
-
     return this.reviews.data.some(review => review.userId === currentUserId);
   }
 
   get reviewLength(): number {
     return this.reviewForm.get('review')?.value?.length ?? 0;
   }
+
+  getReviewPlaceholder(): string {
+    if (!this.accountService.currentUser()) {
+      return 'No login — no review. That’s the rule.';
+    }
+    if (this.hasUserReviewed) {
+      return 'Once upon a time, you wrote a review. Edit or delete the previous one.';
+    }
+    return 'Help others decide — drop your honest review.';
+  }
+
 }
