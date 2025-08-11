@@ -4,7 +4,8 @@ export type Review = {
   rating: number
   userId: string
   avatarPath: string
-  userName: string;
+  firstName: string,
+  lastName: string,
   createdAt: string
   updatedAt: string
 }
