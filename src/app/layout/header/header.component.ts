@@ -6,10 +6,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CartService } from '../../core/services/cart.service';
 import { CommonModule } from '@angular/common';
 import { AccountService } from '../../core/services/account.service';
+import { IsAdmin } from '../../shared/directives/is-admin';
 
 @Component({
   selector: 'app-header',
-  imports: [MatBadge, RouterLink, RouterLinkActive, MatProgressBarModule, CommonModule],
+  imports: [MatBadge, RouterLink, RouterLinkActive, MatProgressBarModule, CommonModule, IsAdmin],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
