@@ -1,5 +1,11 @@
-<app-header></app-header>
-
-<router-outlet></router-outlet>
-
-<app-footer></app-footer>
+@if (adminRoute) {
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+} @else {
+    <app-sidebar></app-sidebar>
+    <div class="sm:pl-65 p-2 ms-3">
+       <router-outlet></router-outlet> 
+    </div>
+    
+}
