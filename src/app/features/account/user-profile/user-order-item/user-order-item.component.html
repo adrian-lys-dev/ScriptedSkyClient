@@ -75,53 +75,9 @@
             </dd>
         </dl>
 
-        <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4 relative dropdown-container">
-            <button (click)="toggleDropdown()"
-                class="flex w-full items-center cursor-pointer justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 md:w-auto">
-                Actions
-                <svg class="-me-0.5 ms-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m19 9-7 7-7-7"></path>
-                </svg>
-            </button>
-
-            @if (dropdownVisible) {
-                <div class="absolute right-0 top-full mt-2 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow z-20">
-
-                    <ul class="p-2 text-left text-sm font-medium text-gray-500">
-                        <li>
-                            <a routerLink="/account/user-profile/order/{{order.id}}"
-                                class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 cursor-pointer">
-                                <svg class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-width="2"
-                                        d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"></path>
-                                    <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-                                </svg>
-                                Order details
-                            </a>
-                        </li>
-                        @if (order.status == "Pending")
-                        {
-                            <li (click)="cancelOrder()">
-                                <a
-                                    class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">
-                                    <svg class="me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z">
-                                        </path>
-                                    </svg>
-                                    Cancel order
-                                </a>
-                            </li>
-                        }
-                    </ul>
-
-                </div>
-            }
-
+        <div class="w-full sm:w-32 sm:mt-7">
+            <app-dropdown [options]="options" label="Actions"></app-dropdown>
         </div>
+        
     </div>
 }
