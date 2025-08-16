@@ -1,40 +1,31 @@
-import { Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Order } from '../../../../shared/models/order/orderResponse';
 import { CommonModule, DatePipe } from '@angular/common';
 import { UserProfileService } from '../../../../core/services/user-profile.service';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { DropdownIcon, DropdownOption } from '../../../../shared/models/dropdown/dropDownOptions';
+import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown.component';
 
 @Component({
   selector: 'app-user-order-item',
-  imports: [DatePipe, CommonModule, RouterLink],
+  imports: [DatePipe, CommonModule, DropdownComponent],
   templateUrl: './user-order-item.component.html',
   styleUrl: './user-order-item.component.scss'
 })
-export class UserOrderItemComponent {
+export class UserOrderItemComponent implements OnInit{
 
   private userProfileService = inject(UserProfileService);
+  private router = inject(Router);
   
   @Input() order?: Order;
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  dropdownVisible: boolean = false;
+  options: DropdownOption[] = [];
+  
   isCancelling: boolean = false;
 
-  toggleDropdown() {
-    this.dropdownVisible = !this.dropdownVisible;
-  }
-
-  closeDropdown() {
-    this.dropdownVisible = false;
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    const clickedInside = target.closest('.dropdown-container');
-    if (!clickedInside) {
-      this.dropdownVisible = false;
-    }
+  ngOnInit(): void {
+    this.setDropDownOptions();
   }
 
   cancelOrder() {
@@ -48,16 +39,36 @@ export class UserOrderItemComponent {
       next: () => {
         this.order!.status = 'Cancelled';
         this.isCancelling = false;
-        this.closeDropdown();
+        this.setDropDownOptions();
         this.loadingChange.emit(false); 
       },
       error: error => {
         console.error(`Error cancelling order ${this.order!.id}:`, error);
         this.isCancelling = false;
-        this.closeDropdown();
         this.loadingChange.emit(false);
       }
     })
+  }
+
+  setDropDownOptions() {
+    if (!this.order) {
+      this.options = [];
+      return;
+    }
+
+    this.options = [
+      {
+        label: 'Order details',
+        action: () => this.router.navigate([`/account/user-profile/order/${this.order!.id}`]),
+        icon: DropdownIcon.Eye
+      },
+      ...(this.order.status === 'Pending' ? [{
+        label: 'Cancel order',
+        class: 'text-red-600',
+        action: () => this.cancelOrder(),
+        icon: DropdownIcon.Trash
+      }] : [])
+    ];
   }
 
 }
