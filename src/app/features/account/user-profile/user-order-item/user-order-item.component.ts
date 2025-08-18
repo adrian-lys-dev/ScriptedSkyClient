@@ -28,47 +28,60 @@ export class UserOrderItemComponent implements OnInit{
     this.setDropDownOptions();
   }
 
-  cancelOrder() {
-
-    if (!this.order) return;
+  cancelOrder(): void {
+    const order = this.order;
+    if (!order) return;
 
     this.isCancelling = true;
     this.loadingChange.emit(true);
 
-    this.userProfileService.cancelOrder(this.order.id).subscribe({
+    this.userProfileService.cancelOrder(order.id).subscribe({
       next: () => {
-        this.order!.status = 'Cancelled';
+        order.status = 'Cancelled';
         this.isCancelling = false;
         this.setDropDownOptions();
-        this.loadingChange.emit(false); 
+        this.loadingChange.emit(false);
       },
-      error: error => {
-        console.error(`Error cancelling order ${this.order!.id}:`, error);
+      error: (error) => {
+        console.error(`Error cancelling order ${order.id}:`, error);
         this.isCancelling = false;
         this.loadingChange.emit(false);
       }
-    })
+    });
   }
 
   setDropDownOptions() {
-    if (!this.order) {
+    const order = this.order;
+    if (!order) {
       this.options = [];
       return;
     }
 
-    this.options = [
+    const options: DropdownOption[] = [
       {
         label: 'Order details',
-        action: () => this.router.navigate([`/account/user-profile/order/${this.order!.id}`]),
+        action: () => this.router.navigate([`/account/user-profile/order/${order.id}`]),
         icon: DropdownIcon.Eye
-      },
-      ...(this.order.status === 'Pending' ? [{
-        label: 'Cancel order',
-        class: 'text-red-600',
-        action: () => this.cancelOrder(),
-        icon: DropdownIcon.Trash
-      }] : [])
+      }
     ];
+
+    switch (order.status) {
+      case 'Pending':
+        options.push({
+          label: 'Cancel order',
+          class: 'text-red-600',
+          action: () => this.cancelOrder(),
+          icon: DropdownIcon.Trash
+        });
+        break;
+
+      case 'Confirmed':
+      case 'Done':
+      case 'Cancelled':
+        break;
+    }
+
+    this.options = options;
   }
 
 }
