@@ -15,7 +15,7 @@ export class AdminOrderService {
   getOrderList(paginationParams: PaginationParams) {
     let params = new HttpParams();
 
-    params = params.append('pageSize', paginationParams.PageSize = 15);
+    params = params.append('pageSize', paginationParams.PageSize = 12);
     params = params.append('pageIndex', paginationParams.PageNumber);
 
     return this.http.get<Pagination<Order>>(this.baseUrl + 'adminorder', { params });

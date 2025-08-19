@@ -1,48 +1,63 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ElementRef, ViewChild } from '@angular/core';
 import { DropdownOption } from '../../models/dropdown/dropDownOptions';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { ViewContainerRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dropdown',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.scss'
+  styleUrls: ['./dropdown.component.scss']
 })
 export class DropdownComponent {
   @Input() options: DropdownOption[] = [];
   @Input() label: string = 'Actions';
-
   @Output() optionSelected = new EventEmitter<DropdownOption>();
 
   isOpen: boolean = false;
-  private static openedDropdown: DropdownComponent | null = null;
-  
+  private overlayRef!: OverlayRef;
+
+  @ViewChild('dropdownMenu') dropdownMenuTemplate!: any;
+
+  constructor(private overlay: Overlay, private vcr: ViewContainerRef, private el: ElementRef) {}
 
   toggleDropdown() {
     if (this.isOpen) {
       this.closeDropdown();
     } else {
-      if (DropdownComponent.openedDropdown && DropdownComponent.openedDropdown !== this) {
-        DropdownComponent.openedDropdown.closeDropdown();
-      }
+      const positionStrategy = this.overlay.position()
+        .flexibleConnectedTo(this.el.nativeElement.querySelector('button'))
+        .withPositions([{
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        }]);
+
+      this.overlayRef = this.overlay.create({
+        positionStrategy,
+        scrollStrategy: this.overlay.scrollStrategies.reposition(),
+        hasBackdrop: true,
+        backdropClass: 'cdk-overlay-transparent-backdrop'
+      });
+
+      this.overlayRef.backdropClick().subscribe(() => this.closeDropdown());
+
+      const portal = new TemplatePortal(this.dropdownMenuTemplate, this.vcr);
+      this.overlayRef.attach(portal);
+
       this.isOpen = true;
-      DropdownComponent.openedDropdown = this;
     }
   }
 
   closeDropdown() {
+    if (this.overlayRef) {
+      this.overlayRef.detach();
+      this.overlayRef.dispose();
+    }
     this.isOpen = false;
-    if (DropdownComponent.openedDropdown === this) {
-      DropdownComponent.openedDropdown = null;
-    }
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    const clickedInside = target.closest('.dropdown-container');
-    if (!clickedInside || !clickedInside.contains(target)) {
-      this.closeDropdown();
-    }
   }
 
   selectOption(option: DropdownOption) {
@@ -50,5 +65,4 @@ export class DropdownComponent {
     this.optionSelected.emit(option);
     this.closeDropdown();
   }
-
 }

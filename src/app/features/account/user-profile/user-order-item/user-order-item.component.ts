@@ -61,6 +61,8 @@ export class UserOrderItemComponent implements OnInit{
       {
         label: 'Order details',
         action: () => this.router.navigate([`/account/user-profile/order/${order.id}`]),
+        class: 'text-gray-500',
+        iconHover: 'group-hover:text-gray-900',
         icon: DropdownIcon.Eye
       }
     ];

@@ -1,16 +1,15 @@
-<div class="relative dropdown-container cursor-pointer sm:gap-4">
+<div class="relative cursor-pointer sm:gap-4">
   <button (click)="toggleDropdown()"
     class="flex w-full items-center cursor-pointer justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 md:w-auto">
     {{ label }}
     <svg class="ms-1.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="m19 9-7 7-7-7"></path>
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"></path>
     </svg>
   </button>
 
-  @if (isOpen) {
-    <div class="absolute right-0 top-full mt-2 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow z-20">
-      <ul class="p-2 text-left text-sm font-medium text-gray-500">
+  <ng-template #dropdownMenu>
+    <div class="mt-2 w-auto divide-y divide-gray-100 rounded-lg bg-white shadow z-50">
+      <ul class="p-2 text-left text-sm font-medium">
         @for (option of options; track option.label) {
           <li>
             <a (click)="selectOption(option)" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer {{ option.class || '' }}">
@@ -20,7 +19,7 @@
                   <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                 </svg>
               } @else if (option.icon === 'trash') {
-                <svg class="me-1.5 h-4 w-4 {{ option.iconHover }}"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg class="me-1.5 h-4 w-4 {{ option.iconHover }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                 </svg>
               } @else if (option.icon === 'check'){
@@ -35,11 +34,11 @@
               {{ option.label }}
             </a>
           </li>
-        } @empty {
+        }
+        @if (options.length === 0) {
           <li class="text-gray-400 px-3 py-2">No actions available</li>
         }
       </ul>
     </div>
-  }
-
+  </ng-template>
 </div>

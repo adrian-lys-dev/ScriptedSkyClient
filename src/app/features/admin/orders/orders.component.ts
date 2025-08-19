@@ -9,10 +9,12 @@ import { DropdownComponent } from "../../../shared/components/dropdown/dropdown.
 import { DropdownIcon, DropdownOption } from '../../../shared/models/dropdown/dropDownOptions';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../core/services/snackbar.service';
+import { BusyService } from '../../../core/services/busy.service';
+import { LoadingAdminComponent } from "../../../shared/components/loading-admin/loading-admin.component";
 
 @Component({
   selector: 'app-orders',
-  imports: [DatePipe, MatPaginator, CommonModule, DropdownComponent],
+  imports: [DatePipe, MatPaginator, CommonModule, DropdownComponent, LoadingAdminComponent],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss'
 })
@@ -21,6 +23,7 @@ export class OrdersComponent implements OnInit {
   private adminOrderService = inject(AdminOrderService);
   private router = inject(Router);
   private snackbar = inject(SnackbarService);
+  busyService = inject(BusyService);
 
   paginationParams = new PaginationParams();
   orders?: Pagination<Order>;

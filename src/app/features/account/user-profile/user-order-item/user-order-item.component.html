@@ -1,13 +1,13 @@
 @if (order) {
     <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 md:pb-5">
-        <dl class="w-1/2 sm:w-48">
+        <dl class="w-1/2 sm:w-48 mt-4 lg:mt-0">
             <dt class="text-base font-medium text-gray-500">Order ID:</dt>
             <dd class="mt-1.5 text-base font-semibold text-gray-900">
                 <span>{{order.id}}</span>
             </dd>
         </dl>
 
-        <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
+        <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto mt-4 lg:mt-0">
             <dt class="text-base font-medium text-gray-500">Date:</dt>
             <dd class="mt-1.5 text-base font-semibold text-gray-900">{{order.createdAt | date:'dd.MM.yyyy'}}</dd>
         </dl>
