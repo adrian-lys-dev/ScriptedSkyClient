@@ -10,6 +10,7 @@ import { MonthlySales } from '../../shared/models/dashboard/monthlySales';
 import { GenresSales } from '../../shared/models/dashboard/genresSales';
 import { RatingDistribution } from '../../shared/models/dashboard/ratingDistribution';
 import { AvatarUsage } from '../../shared/models/dashboard/avatarUsage';
+import { Quote, QUOTES } from '../../shared/models/dashboard/quote';
 
 const ratingTheme: AgChartTheme = {
   palette: {
@@ -41,8 +42,12 @@ export class AdminComponent implements OnInit {
   ratingDistribution?: RatingDistribution[];
   avatarUsage?: AvatarUsage[];
 
+  currentQuote!: Quote;
+  quotes: Quote[] = QUOTES;
+
   constructor() {
     this.initializeChartOptions();
+    this.currentQuote = this.getQuoteOfTheDay();
   }
 
   ngOnInit(): void {
@@ -100,6 +105,13 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  getQuoteOfTheDay(): Quote {
+    const today = new Date();
+    const dayNumber = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+    const index = dayNumber % this.quotes.length;
+    return this.quotes[index];
+  }
+
   private initializeChartOptions(): void {
     this.barChartOptions = {
       title: { text: "Month Sales Data" },
@@ -136,6 +148,5 @@ export class AdminComponent implements OnInit {
       background: { fill: '#f9fafb' }
     };
   }
-
 
 }
