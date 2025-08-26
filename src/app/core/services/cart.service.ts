@@ -66,7 +66,7 @@ export class CartService {
       item = this.mapBookToCartItem(item);
     }
     cart.items = this.addOrUpdateItem(cart.items, item, quantity);
-    this.setCart(cart);
+    if(cart.items.length > 0) this.setCart(cart);
   }
 
   removeItemFromCart(bookId: number, quantity = 1) {
@@ -104,16 +104,18 @@ export class CartService {
   }
 
   private addOrUpdateItem(items: CartItem[], item: CartItem, quantity: number): CartItem[] {    
-    const index = items.findIndex(x => x.bookId === item.bookId);
-    if (index === -1) {
-      item.quantity = quantity;
-      items.push(item);      
-    } else {
-      items[index].quantity += quantity      
-    }
+      const index = items.findIndex(x => x.bookId === item.bookId);
 
-    return items;
+      if (index === -1) {
+          item.quantity = Math.min(quantity, item.quantityInStock);
+          if (item.quantity > 0) items.push(item);
+      } else {
+          items[index].quantity = Math.min(items[index].quantity + quantity, item.quantityInStock);
+      }
+
+      return items;
   }
+
 
   private isCatalogBook(item: any): item is CatalogBook {
     return (item as CatalogBook).authorNames !== undefined;
@@ -131,6 +133,7 @@ export class CartService {
       authorName: item.authorNames,
       price: item.price,
       quantity: 0,
+      quantityInStock: item.quantityInStock,
       pictureURL: item.pictureURL
     }
   }
@@ -142,6 +145,7 @@ export class CartService {
       authorName: item.author.map(a => a.name).join(', '),
       price: item.price,
       quantity: 0,
+      quantityInStock: item.quantityInStock,
       pictureURL: item.pictureURL
     };
   }

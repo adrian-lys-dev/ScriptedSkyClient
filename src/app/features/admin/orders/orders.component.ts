@@ -144,9 +144,19 @@ export class OrdersComponent implements OnInit {
       },
       error: (error) => {
         console.error(`Error updating order ${order.id} to ${status}:`, error);
+
         this.loadingOrders.delete(order.id);
-        this.snackbar.error(`Failed to update Order #${order.id}. Please try again.`);
+
+        let errorMessage = 'Failed to update order. Please try again.';
+        if (error?.error?.message) {
+          errorMessage = error.error.message;
+        } else if (typeof error?.error === 'string') {
+          errorMessage = error.error;
+        }
+
+        this.snackbar.error(`Order #${order.id}: ${errorMessage}`);
       }
+
     });
   }
 
