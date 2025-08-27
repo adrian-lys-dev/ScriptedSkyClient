@@ -24,5 +24,9 @@ export class AdminOrderService {
   updateOrderStatus(orderId: number, status: string) {
     return this.http.put(this.baseUrl + 'adminorder/update-status/' + orderId, null, { params: { status } } );
   }
+
+  getOrderById(id: number) {
+    return this.http.get<Order>(this.baseUrl + 'adminorder/get-order/' + id);
+  }
   
 }

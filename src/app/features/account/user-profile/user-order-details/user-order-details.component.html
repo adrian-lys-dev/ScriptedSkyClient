@@ -98,7 +98,9 @@
             <div class="space-y-1">
               <div class="flex justify-between">
                 <span class="font-medium">Items:</span>
-                <span class="text-right">{{ order.subtotal - order.deliveryMethod.price }}₴</span>
+                <span class="text-right">
+                  {{ order.subtotal - order.deliveryMethod.price | number : '1.0-2' }}₴
+                </span>
               </div>
               <div class="flex justify-between">
                 <span class="font-medium">Shipping:</span>
