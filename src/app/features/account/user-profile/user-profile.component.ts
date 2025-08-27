@@ -63,7 +63,7 @@ export class UserProfileComponent implements OnInit {
           this.snackbar.success('Your avatar updated successfully!');
         },
         error: err => {
-          this.snackbar.success('Something went wrong...');
+          this.snackbar.error('Something went wrong...');
         }
       });
     }

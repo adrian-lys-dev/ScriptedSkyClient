@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 import { Cart, CartItem } from '../../shared/models/cart/cart';
 import { CatalogBook } from '../../shared/models/catalogBook';
 import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
 export class CartService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
+  private snackbar = inject(SnackbarService);
   cart = signal<Cart | null>(null);
   loading = signal(false);
 
@@ -59,6 +61,11 @@ export class CartService {
   }
 
   addItemToCart(item: CartItem | CatalogBook | Book, quantity = 1) {    
+    if (this.isCatalogBook(item) && item.quantityInStock <= 0) {
+      this.snackbar.error('Cannot add out-of-stock item to cart.');
+      return;
+    }
+
     const cart = this.cart() ?? this.createCart()
     if (this.isCatalogBook(item)) {
       item = this.mapCatalogBookToCartItem(item);
