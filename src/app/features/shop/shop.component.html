@@ -5,197 +5,183 @@
 
 
 @if (books) {
-<div class="container xs:max-w-screen-2xl mx-auto">
-  <main class="container xs:max-w-screen-2xl mx-auto flex flex-col px-4 sm:px-6 md:px-8 lg:px-6 xl:px-2">
-    <div class="grid grid-cols-1 lg:grid-cols-5 items-center lg:gap-6">
-      <!-- The title takes 1 column -->
-      <div class="col-span-1">
-        <h1 class="all-product-subtitle text-4xl lg:text-3xl xl:text-4xl font-extrabold whitespace-nowrap">
-          Catalog Books
-        </h1>
-      </div>
-
-      <!-- Search and other elements takes 4 columns -->
-      <div class="col-span-4 flex items-center justify-between gap-2">
-        <!-- Search -->
-        <div class="relative w-full max-w-full">
-          <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="flex w-full">
-            <input type="text" class="pl-3 py-2 border border-gray-300 rounded-lg w-full text-sm text-gray-900"
-              placeholder="Search" name="search" [(ngModel)]="shopParams.search" />
-            <button type="submit"
-              class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer">
-              <!-- SVG search icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                fill="currentColor">
-                <path
-                  d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
-              </svg>
-            </button>
-          </form>
+  <div class="container xs:max-w-screen-2xl mx-auto">
+    <main class="container xs:max-w-screen-2xl mx-auto flex flex-col px-4 sm:px-6 md:px-8 lg:px-6 xl:px-2">
+      <div class="grid grid-cols-1 lg:grid-cols-5 items-center lg:gap-6">
+        <!-- The title takes 1 column -->
+        <div class="col-span-1">
+          <h1 class="all-product-subtitle text-4xl lg:text-3xl xl:text-4xl font-extrabold whitespace-nowrap">
+            Catalog Books
+          </h1>
         </div>
 
-        <!-- Sorting -->
-        <div class="relative">
-          <button id="sortButton" (click)="toggleDropdown()" class="flex hover:text-gray-900 items-center cursor-pointer">
-            Sort
-            <svg class="ml-1 w-5 h-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor"
-              aria-hidden="true" data-slot="icon">
+        <!-- Search and other elements takes 4 columns -->
+        <div class="col-span-4 flex items-center justify-between gap-2">
+          <!-- Search -->
+          <div class="relative w-full max-w-full">
+            <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="flex w-full">
+              <input type="text" class="pl-3 py-2 border border-gray-300 rounded-lg w-full text-sm text-gray-900"
+                placeholder="Search" name="search" [(ngModel)]="shopParams.search" />
+              <button type="submit"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer">
+                <!-- SVG search icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                  fill="currentColor">
+                  <path
+                    d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <!-- Sorting -->
+          <div class="relative">
+            <button id="sortButton" (click)="toggleDropdown()" class="flex hover:text-gray-900 items-center cursor-pointer">
+              Sort
+              <svg class="ml-1 w-5 h-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
+
+            @if(isOpen){
+              <div id="dropdown"
+                class="origin-top-right absolute right-0 top-full mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                <div class="py-1">
+                  <a *ngFor="let sort of sortOptions" (click)="onSortChange(sort.value)"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">{{ sort.name }}</a>
+                </div>
+              </div>            
+            }
+
+          </div>
+
+          <!-- Button filters for mobile -->
+          <button class="hover:text-gray-500 lg:hidden" (click)="toggleFilters()">
+            <svg class="w-5 h-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
               <path fill-rule="evenodd"
-                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z"
                 clip-rule="evenodd" />
             </svg>
           </button>
-
-          <div *ngIf="isOpen" id="dropdown"
-            class="origin-top-right absolute right-0 top-full mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-            <div class="py-1">
-              <a *ngFor="let sort of sortOptions" (click)="onSortChange(sort.value)"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">{{ sort.name }}</a>
-            </div>
-          </div>
         </div>
-
-        <!-- Button filters for mobile -->
-        <button class="hover:text-gray-500 lg:hidden" (click)="toggleFilters()">
-          <svg class="w-5 h-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
-            <path fill-rule="evenodd"
-              d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z"
-              clip-rule="evenodd" />
-          </svg>
-        </button>
       </div>
-    </div>
 
 
-    <section class="pb-24">
-      <div class="grid grid-cols-1 lg:grid-cols-5">
+      <section class="pb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-5">
 
-        <!-- Filters -->
-        <div class="hidden lg:block lg:col-span-1 pr-4">
-          <div class="flex items-center justify-between pb-2">
-            <h2>Filters</h2>
-              <button (click)="resetFilters()" class="group hover:text-gray-600 cursor-pointer">
-                <svg class="w-6 h-6 transition-transform duration-300 group-hover:rotate-90"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18 17.94 6M18 18 6.06 6" />
-                </svg>
-              </button>
-          </div>
-
-          <div class="space-y-2">
-            <app-filter *ngIf="genres.length > 0" filterName="Genres" [filterOptions]="genres"
-              [selectedIds]="selectedIdGenres" (selectionChange)="onSelectionChange($event, 'selectedIdGenres')">
-            </app-filter>
-
-            <app-filter *ngIf="authors.length > 0" filterName="Authors" [filterOptions]="authors"
-              [selectedIds]="selectedIdAuthors" (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')">
-            </app-filter>
-
-            <app-filter *ngIf="publishers.length > 0" filterName="Publishers" [filterOptions]="publishers"
-              [selectedIds]="selectedIdPublishers"
-              (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')">
-            </app-filter>
-
-            <!-- Filtreing Btns -->
-            <div class="flex">
-              <button (click)="applyFilters()"
-                class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center p-2 cursor-pointer">
-                Apply Filters
-                <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M5 11.917 9.724 16.5 19 7.5" />
-                </svg>
-              </button>
+          <!-- Filters -->
+          <div class="hidden lg:block lg:col-span-1 pr-4">
+            <div class="flex items-center justify-between pb-2">
+              <h2>Filters</h2>
+                <button (click)="resetFilters()" class="group hover:text-gray-600 cursor-pointer">
+                  <svg class="w-6 h-6 transition-transform duration-300 group-hover:rotate-90"
+                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M6 18 17.94 6M18 18 6.06 6" />
+                  </svg>
+                </button>
             </div>
 
-          </div>
-        </div>
-
-        <!-- Books Grid -->
-        <section class="lg:col-span-4 mt-2">
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-4">
-            @if (busyService.loading || books == null)
-            {
-              <div class="flex flex-col items-center justify-center w-full col-span-full h-[60vh]">
-                <img src="assets/loading/bookLoadingCatalog.gif"
-                    alt="Loading..."
-                    class="w-54 md:w-80 lg:w-46 max-w-full h-auto object-none" />
-                <p class="text-center text-gray-500 mt-4 text-lg">Loading books...</p>
-              </div>
-            }
-            @else if (books.data.length > 0)
-            {
-              @for (book of books.data; track book.id) 
-              {
-                <app-book-item [book]="book"></app-book-item>
+            <div class="space-y-2">
+              @if (genres.length > 0) {
+                <app-filter filterName="Genres" [filterOptions]="genres"
+                  [selectedIds]="selectedIdGenres" (selectionChange)="onSelectionChange($event, 'selectedIdGenres')">
+                </app-filter>              
               }
-            }
-            @else
+
+              @if (authors.length > 0) {
+                <app-filter filterName="Authors" [filterOptions]="authors"
+                  [selectedIds]="selectedIdAuthors" (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')">
+                </app-filter>              
+              }
+
+              @if (publishers.length > 0) {
+                <app-filter filterName="Publishers" [filterOptions]="publishers"
+                  [selectedIds]="selectedIdPublishers" (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')">
+                </app-filter>              
+              }
+
+              <!-- Filtreing Btns -->
+              <div class="flex">
+                <button (click)="applyFilters()"
+                  class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center p-2 cursor-pointer">
+                  Apply Filters
+                  <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5 11.917 9.724 16.5 19 7.5" />
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Books Grid -->
+          <section class="lg:col-span-4 mt-2">
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-4">
+              @if (busyService.loading || books == null)
+              {
+                <div class="flex flex-col items-center justify-center w-full col-span-full h-[60vh]">
+                  <img src="assets/loading/bookLoadingCatalog.gif"
+                      alt="Loading..."
+                      class="w-54 md:w-80 lg:w-46 max-w-full h-auto object-none" />
+                  <p class="text-center text-gray-500 mt-4 text-lg">Loading books...</p>
+                </div>
+              }
+              @else if (books.data.length > 0)
+              {
+                @for (book of books.data; track book.id) 
+                {
+                  <app-book-item [book]="book"></app-book-item>
+                }
+              }
+              @else
+              {
+                <div class="flex flex-col items-center justify-center w-full col-span-full h-[60vh]">
+                  <img src="assets/states/empty_state.png" alt="No books found"
+                      class="w-64 md:w-80 lg:w-96 max-w-full h-auto">
+                  <p class="text-center text-gray-600 text-lg mt-4">No books found.</p>
+                  <p class="text-center text-gray-600 text-sm mt-4">Maybe try other filters?</p>
+                </div>
+              }
+            </div>
+            @if (!busyService.loading)
             {
-              <div class="flex flex-col items-center justify-center w-full col-span-full h-[60vh]">
-                <img src="assets/states/empty_state.png" alt="No books found"
-                    class="w-64 md:w-80 lg:w-96 max-w-full h-auto">
-                <p class="text-center text-gray-600 text-lg mt-4">No books found.</p>
-                <p class="text-center text-gray-600 text-sm mt-4">Maybe try other filters?</p>
+              <div class="flex justify-center mt-6">
+                <mat-paginator (page)="handlePageEvent($event)" [length]="books.count"
+                  [pageSize]="shopParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="shopParams.PageNumber - 1"
+                  aria-label="Select page" hidePageSize="true">
+                </mat-paginator>
               </div>
             }
-          </div>
-          @if (!busyService.loading)
-          {
-            <div class="flex justify-center mt-6">
-              <mat-paginator (page)="handlePageEvent($event)" [length]="books.count"
-                [pageSize]="shopParams.PageSize" [showFirstLastButtons]="true" [pageIndex]="shopParams.PageNumber - 1"
-                aria-label="Select page" hidePageSize="true">
-              </mat-paginator>
-            </div>
-          }
-         
-        </section>
+          
+          </section>
 
-      </div>
-    </section>
+        </div>
+      </section>
 
 
 
-  </main>
+    </main>
 
-</div>
-
-<!-- Mobile Menu Overlay -->
-<div class="lg:hidden fixed inset-0 bg-[rgba(0,0,0,0.5)] z-40" *ngIf="isFiltersVisible" (click)="toggleFilters()">
-</div>
-
-<!-- Mobile Filtering Sidebar -->
-<div class="lg:hidden fixed inset-y-0 left-0 w-64 bg-white z-50 transform transition-transform duration-300 ease-in-out"
-  [ngClass]="{'translate-x-0': isFiltersVisible, '-translate-x-full': !isFiltersVisible}">
-  <div class="flex items-center justify-between pb-2 p-2">
-    <h2>Filters</h2>
-    <button (click)="toggleFilters()" class=" hover:text-gray-600">
-      <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-        viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M6 18 17.94 6M18 18 6.06 6" />
-      </svg>
-    </button>
   </div>
-  <div class="space-y-2 overflow-y-auto h-[calc(100vh-4rem)]">
-    <app-filter *ngIf="genres.length > 0" filterName="Genres" [filterOptions]="genres" [selectedIds]="selectedIdGenres"
-      (selectionChange)="onSelectionChange($event, 'selectedIdGenres')"></app-filter>
-  
-    <app-filter *ngIf="authors.length > 0" filterName="Authors" [filterOptions]="authors"
-      [selectedIds]="selectedIdAuthors" (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')">
-    </app-filter>
-  
-    <app-filter *ngIf="publishers.length > 0" filterName="Publishers" [filterOptions]="publishers"
-      [selectedIds]="selectedIdPublishers" (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')">
-    </app-filter>
-    <div class="flex">
-      <button (click)="resetFilters()"
-        class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
-        Reset Filters
+
+  <!-- Mobile Menu Overlay -->
+  <div class="lg:hidden fixed inset-0 bg-[rgba(0,0,0,0.5)] z-40" *ngIf="isFiltersVisible" (click)="toggleFilters()">
+  </div>
+
+  <!-- Mobile Filtering Sidebar -->
+  <div class="lg:hidden fixed inset-y-0 left-0 w-64 bg-white z-50 transform transition-transform duration-300 ease-in-out"
+    [ngClass]="{'translate-x-0': isFiltersVisible, '-translate-x-full': !isFiltersVisible}">
+    <div class="flex items-center justify-between pb-2 p-2">
+      <h2>Filters</h2>
+      <button (click)="toggleFilters()" class=" hover:text-gray-600">
         <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
           viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -203,19 +189,45 @@
         </svg>
       </button>
     </div>
+    <div class="space-y-2 overflow-y-auto h-[calc(100vh-4rem)]">
+      @if (genres.length > 0) {
+        <app-filter filterName="Genres" [filterOptions]="genres" [selectedIds]="selectedIdGenres"
+          (selectionChange)="onSelectionChange($event, 'selectedIdGenres')"></app-filter>      
+      }
 
-    <div class="flex">
-      <button (click)="applyFilters()"
-        class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
-        Apply Filters
-        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-          viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5 11.917 9.724 16.5 19 7.5" />
-        </svg>
-      </button>
+      @if (authors.length > 0) {
+        <app-filter filterName="Authors" [filterOptions]="authors" [selectedIds]="selectedIdAuthors"
+          (selectionChange)="onSelectionChange($event, 'selectedIdAuthors')"></app-filter>      
+      }
+
+      @if (publishers.length > 0) {
+        <app-filter filterName="Publishers" [filterOptions]="publishers" [selectedIds]="selectedIdPublishers"
+          (selectionChange)="onSelectionChange($event, 'selectedIdPublishers')"></app-filter>      
+      }
+    
+      <div class="flex">
+        <button (click)="resetFilters()"
+          class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
+          Reset Filters
+          <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+            viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M6 18 17.94 6M18 18 6.06 6" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex">
+        <button (click)="applyFilters()"
+          class="btn btn-primary w-full rounded-sm bg-gray-100 hover:bg-gray-200 flex items-center justify-center space-x-2">
+          Apply Filters
+          <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+            viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 11.917 9.724 16.5 19 7.5" />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
-</div>
-
 }
