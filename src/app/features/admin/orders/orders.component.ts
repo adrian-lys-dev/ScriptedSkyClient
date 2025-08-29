@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PaginationParams } from '../../../shared/models/pagination/paginationParams';
 import { Pagination } from '../../../shared/models/pagination/pagination';
-import { Order } from '../../../shared/models/order/orderResponse';
 import { AdminOrderService } from '../../../core/services/admin-services/admin-order.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -11,6 +10,7 @@ import { Router } from '@angular/router';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 import { BusyService } from '../../../core/services/busy.service';
 import { LoadingAdminComponent } from "../../../shared/components/loading-admin/loading-admin.component";
+import { AdminOrder } from '../../../shared/models/order/adminOrderResponse';
 
 @Component({
   selector: 'app-orders',
@@ -26,7 +26,7 @@ export class OrdersComponent implements OnInit {
   busyService = inject(BusyService);
 
   paginationParams = new PaginationParams();
-  orders?: Pagination<Order>;
+  orders?: Pagination<AdminOrder>;
   loadingOrders = new Set<number>();
 
   options: DropdownOption[] = [];
@@ -48,7 +48,7 @@ export class OrdersComponent implements OnInit {
     this.getCurrentUserOrdersList();
   }
 
-  getDropDownOptions(order: Order): DropdownOption[] {
+  getDropDownOptions(order: AdminOrder): DropdownOption[] {
 
     const options: DropdownOption[] = [
       {
@@ -105,19 +105,19 @@ export class OrdersComponent implements OnInit {
     return options;
   }
 
-  confirmOrder(order: Order) {
+  confirmOrder(order: AdminOrder) {
     this.updateOrderStatusForOrder(order, 'Confirmed');
   }
 
-  doneOrder(order: Order) {
+  doneOrder(order: AdminOrder) {
     this.updateOrderStatusForOrder(order, 'Done');
   }
 
-  cancelOrder(order: Order) {
+  cancelOrder(order: AdminOrder) {
     this.updateOrderStatusForOrder(order, 'Cancelled');
   }
 
-  private updateOrderStatusForOrder(order: Order, status: 'Confirmed' | 'Done' | 'Cancelled') {
+  private updateOrderStatusForOrder(order: AdminOrder, status: 'Confirmed' | 'Done' | 'Cancelled') {
     this.loadingOrders.add(order.id);
 
     this.adminOrderService.updateOrderStatus(order.id, status).subscribe({

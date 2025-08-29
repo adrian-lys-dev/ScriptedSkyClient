@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AdminOrderService } from '../../../../core/services/admin-services/admin-order.service';
 import { BusyService } from '../../../../core/services/busy.service';
-import { Order } from '../../../../shared/models/order/orderResponse';
 import { CommonModule } from '@angular/common';
 import { LoadingAdminComponent } from "../../../../shared/components/loading-admin/loading-admin.component";
+import { AdminOrder } from '../../../../shared/models/order/adminOrderResponse';
 
 @Component({
   selector: 'app-order-details',
@@ -17,7 +17,7 @@ export class OrderDetailsComponent implements OnInit {
   private adminOrderService = inject(AdminOrderService);
   busyService = inject(BusyService);
 
-  order?: Order;
+  order?: AdminOrder;
 
   ngOnInit(): void {
     this.loadOrder();

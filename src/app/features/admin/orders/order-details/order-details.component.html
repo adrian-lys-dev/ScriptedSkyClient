@@ -56,6 +56,16 @@
           </dl>
         </div>
 
+        <div class="mb-4 border-b border-t border-gray-300 py-3">
+          <h2 class="text-2xl font-semibold mb-2">The user who created the order</h2>
+          <div class="flex flex-wrap items-center divide-x divide-gray-300 overflow-hidden text-gray-700">
+            <span class="py-2 pr-4"><span class="font-medium">ID:</span> {{ order.user.id }}</span>
+            <span class="py-2 px-4"><span class="font-medium">First Name:</span> {{ order.user.firstName }}</span>
+            <span class="py-2 px-4"><span class="font-medium">Last Name:</span> {{ order.user.lastName }}</span>
+            <span class="py-2 px-4"><span class="font-medium">Email:</span> {{ order.user.email }}</span>
+          </div>
+        </div>
+
         <!-- Three Cols Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-md mb-4">
           <!-- Basic Information -->
