@@ -41,7 +41,7 @@ export class BookDetailComponent implements OnInit {
 
   book?: Book;
   quantityInCart = 0;
-  quantity = 1;
+  quantity = 0;
   rating = 0;
   hoverRating = 0;
 
@@ -71,7 +71,10 @@ export class BookDetailComponent implements OnInit {
     const id = this.bookId;
     if (!id) return;
     this.shopService.getBook(id).subscribe({
-      next: book => this.book = book,
+      next: book => {
+        this.book = book
+        this.quantity = book?.quantityInStock && book.quantityInStock > 0 ? 1 : 0;
+      },
       error: error => console.error('Error loading book:', error)
     });
   }

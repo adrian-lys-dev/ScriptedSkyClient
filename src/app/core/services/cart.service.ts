@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 import { Cart, CartItem } from '../../shared/models/cart/cart';
 import { CatalogBook } from '../../shared/models/catalogBook';
 import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { DeliveryMethods } from '../../shared/models/order/deliveryMethods';
 export class CartService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
+  private snackbar = inject(SnackbarService);
   cart = signal<Cart | null>(null);
   loading = signal(false);
 
@@ -59,6 +61,11 @@ export class CartService {
   }
 
   addItemToCart(item: CartItem | CatalogBook | Book, quantity = 1) {    
+    if (this.isCatalogBook(item) && item.quantityInStock <= 0) {
+      this.snackbar.error('Cannot add out-of-stock item to cart.');
+      return;
+    }
+
     const cart = this.cart() ?? this.createCart()
     if (this.isCatalogBook(item)) {
       item = this.mapCatalogBookToCartItem(item);
@@ -66,7 +73,7 @@ export class CartService {
       item = this.mapBookToCartItem(item);
     }
     cart.items = this.addOrUpdateItem(cart.items, item, quantity);
-    this.setCart(cart);
+    if(cart.items.length > 0) this.setCart(cart);
   }
 
   removeItemFromCart(bookId: number, quantity = 1) {
@@ -104,16 +111,18 @@ export class CartService {
   }
 
   private addOrUpdateItem(items: CartItem[], item: CartItem, quantity: number): CartItem[] {    
-    const index = items.findIndex(x => x.bookId === item.bookId);
-    if (index === -1) {
-      item.quantity = quantity;
-      items.push(item);      
-    } else {
-      items[index].quantity += quantity      
-    }
+      const index = items.findIndex(x => x.bookId === item.bookId);
 
-    return items;
+      if (index === -1) {
+          item.quantity = Math.min(quantity, item.quantityInStock);
+          if (item.quantity > 0) items.push(item);
+      } else {
+          items[index].quantity = Math.min(items[index].quantity + quantity, item.quantityInStock);
+      }
+
+      return items;
   }
+
 
   private isCatalogBook(item: any): item is CatalogBook {
     return (item as CatalogBook).authorNames !== undefined;
@@ -131,6 +140,7 @@ export class CartService {
       authorName: item.authorNames,
       price: item.price,
       quantity: 0,
+      quantityInStock: item.quantityInStock,
       pictureURL: item.pictureURL
     }
   }
@@ -142,6 +152,7 @@ export class CartService {
       authorName: item.author.map(a => a.name).join(', '),
       price: item.price,
       quantity: 0,
+      quantityInStock: item.quantityInStock,
       pictureURL: item.pictureURL
     };
   }

@@ -112,6 +112,7 @@
         <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" class="mobile-nav-item">Home</a>
         <a routerLink="/shop" routerLinkActive="active" class="mobile-nav-item">Books</a>
         <a routerLink="/contacts" routerLinkActive="active" class="mobile-nav-item">Contacts</a>
+        <a *appIsAdmin routerLink="/admin" routerLinkActive="active" class="mobile-nav-item">Admin Panel</a>
 
         <div class="mt-auto">
 

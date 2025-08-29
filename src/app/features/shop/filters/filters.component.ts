@@ -27,14 +27,17 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
     @if (expanded) {
       <div class="px-4 pb-4">
-        <div *ngFor="let option of filterOptions" class="flex items-center gap-2 py-1">
+        @for (option of filterOptions; track $index) {
+        <div class="flex items-center gap-2 py-1">
           <input type="checkbox" class="accent-blue-600 w-4 h-4 cursor-pointer"
             [checked]="selectedIds.includes(option.id)" [id]="filterName + '-' + option.id"
             (change)="onSelectionChange(option)"/>
           <label [for]="filterName + '-' + option.id" class="cursor-pointer text-gray-700">
             {{ option.name }}
           </label>
-        </div>
+        </div>          
+        }
+
       </div>
     }
   </div>

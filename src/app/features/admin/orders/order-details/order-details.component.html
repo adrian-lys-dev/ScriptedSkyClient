@@ -1,11 +1,11 @@
 @if (busyService.loading && order == null || order == null)
 {
-  <app-loading-main></app-loading-main>
+  <app-loading-admin></app-loading-admin>
 }
 
 @if (order) {
   <div class="min-h-[70vh] flex flex-col">
-    <div class="container xs:max-w-screen-2xl mx-auto bg-white shadow rounded-xl p-6 mb-3">
+    <div class="min-w-full bg-white shadow rounded-md p-6 mb-3">
 
       <div class="overflow-hidden rounded mb-6 h-[15vh]">
         <img src="/assets/decoration/2303.w026.n002.3343B.p1.3343.jpg" alt="best picture ever, with books" class="w-full h-full object-cover">
@@ -22,12 +22,11 @@
           <dl class="flex items-center mb-4">
             <dt class="text-2xl font-semibold me-2">Status:</dt>
             <dd [ngClass]="{
-                              'bg-yellow-100 text-yellow-800': order.status === 'Pending',
-                              'bg-blue-100 text-blue-800': order.status === 'Confirmed',
-                              'bg-green-100 text-green-800': order.status === 'Done',
-                              'bg-red-100 text-red-800': order.status === 'Cancelled'
-                            }" class="inline-flex items-center rounded px-2.5 py-0.5 text-md font-medium">
-            
+                          'bg-yellow-100 text-yellow-800': order.status === 'Pending',
+                          'bg-blue-100 text-blue-800': order.status === 'Confirmed',
+                          'bg-green-100 text-green-800': order.status === 'Done',
+                          'bg-red-100 text-red-800': order.status === 'Cancelled'
+                        }" class="inline-flex items-center rounded px-2.5 py-0.5 text-md font-medium">
               @switch (order.status) {
                 @case ('Pending') {
                 <svg class="me-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -55,6 +54,16 @@
               {{ order.status }}
             </dd>
           </dl>
+        </div>
+
+        <div class="mb-4 border-b border-t border-gray-300 py-3">
+          <h2 class="text-2xl font-semibold mb-2">The user who created the order</h2>
+          <div class="flex flex-wrap items-center divide-x divide-gray-300 overflow-hidden text-gray-700">
+            <span class="py-2 pr-4"><span class="font-medium">ID:</span> {{ order.user.id }}</span>
+            <span class="py-2 px-4"><span class="font-medium">First Name:</span> {{ order.user.firstName }}</span>
+            <span class="py-2 px-4"><span class="font-medium">Last Name:</span> {{ order.user.lastName }}</span>
+            <span class="py-2 px-4"><span class="font-medium">Email:</span> {{ order.user.email }}</span>
+          </div>
         </div>
 
         <!-- Three Cols Grid -->

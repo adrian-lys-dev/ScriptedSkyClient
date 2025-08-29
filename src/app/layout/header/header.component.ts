@@ -1,6 +1,6 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { MatBadge } from '@angular/material/badge';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { BusyService } from '../../core/services/busy.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CartService } from '../../core/services/cart.service';
@@ -21,28 +21,34 @@ export class HeaderComponent {
   accountService = inject(AccountService);
   private router = inject(Router);
 
-  logout() {
-    this.accountService.logout().subscribe({
-      next: () => {
-        this.accountService.currentUser.set(null);
-        this.isMenuOpen = false; 
-        this.router.navigateByUrl('/');
-      }
-    })
-  }
+  isMenuOpen = false;
 
   ngOnInit(): void {
     this.closeMenuOnResize();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isMenuOpen = false;
+      }
+    });
   }
-
-  isMenuOpen = false;
-
+  
   toggleMenu() {
     if(this.accountService.currentUser()) {
       this.isMenuOpen = !this.isMenuOpen;
     } else {
       this.router.navigateByUrl('/account/login');
     }
+  }
+
+  logout() {
+    this.accountService.logout().subscribe({
+      next: () => {
+        this.accountService.currentUser.set(null);
+        this.isMenuOpen = false;
+        this.router.navigateByUrl('/');
+      }
+    })
   }
 
   @HostListener('document:click', ['$event'])

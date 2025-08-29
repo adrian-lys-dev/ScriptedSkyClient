@@ -12,6 +12,7 @@ export type CartItem = {
   authorName: string;
   price: number;
   quantity: number;
+  quantityInStock: number;
   pictureURL: string;
 }
 

@@ -141,6 +141,7 @@ export class ShopComponent implements OnInit {
       this.shopParams.PageNumber = 1;
       this.updateUrlParams();
     }
+    this.isOpen = false;
   }
 
   // Filtering
