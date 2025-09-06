@@ -3,7 +3,7 @@
 }
 
 @if(genres) {
-  @if (busyService.loading && loadingRoles.size === 0) {
+  @if (busyService.loading) {
     <app-loading-admin></app-loading-admin>
   }
   @else {
@@ -49,7 +49,7 @@
             </th>
             <th class="px-4 py-3 whitespace-nowrap">
               <button type="button"
-                (click)="openCreateReviewModal()"
+                (click)="openCreateGenreModal()"
                 class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-900 cursor-pointer">
                 <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -90,17 +90,16 @@
 
 }
 
-
-@if (createReviewModalOpen) {
-    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4" (click)="closeCreateReviewModal()">
-        <app-add-genre (close)="closeCreateReviewModal()" (saved)="onCreateGenreSaved($event)"
+@if (createGenreModalOpen) {
+    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4" (click)="closeCreateGenreModal()">
+        <app-add-genre (close)="closeCreateGenreModal()" (saved)="onCreateGenreSaved($event)"
             (click)="$event.stopPropagation()"></app-add-genre>
     </div>
 }
 
-@if (editReviewModalOpen) {
-    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4" (click)="closeEditReviewModal()">
-        <app-update-genre [genre]="genreToEdit" (close)="closeEditReviewModal()" (saved)="onEditGenreSaved($event)"
+@if (editGenreModalOpen) {
+    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4" (click)="closeEditGenreModal()">
+        <app-update-genre [genre]="genreToEdit" (close)="closeEditGenreModal()" (saved)="onEditGenreSaved($event)"
             (click)="$event.stopPropagation()"></app-update-genre>
     </div>
 }

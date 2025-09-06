@@ -27,22 +27,20 @@ export class GenresComponent {
   paginationParams = new PaginationParams();
   genres?: Pagination<Genre>;
 
-  createReviewModalOpen = false;
-  editReviewModalOpen = false;
+  createGenreModalOpen = false;
+  editGenreModalOpen = false;
   genreToEdit?: Genre;
-
-  loadingRoles = new Set<string>();
 
   ngOnInit(): void {
     this.getGenresList();
   }
 
-  openCreateReviewModal() {
-    this.createReviewModalOpen = true;
+  openCreateGenreModal() {
+    this.createGenreModalOpen = true;
   }
 
-  closeCreateReviewModal() {
-    this.createReviewModalOpen = false;
+  closeCreateGenreModal() {
+    this.createGenreModalOpen = false;
   }
 
   onCreateGenreSaved(genre: { name: string }) {
@@ -58,13 +56,13 @@ export class GenresComponent {
     });
   }
 
-  openEditReviewModal(genre: Genre) {
-    this.editReviewModalOpen = true;
+  openEditGenreModal(genre: Genre) {
+    this.editGenreModalOpen = true;
     this.genreToEdit = genre;
   }
 
-  closeEditReviewModal() {
-    this.editReviewModalOpen = false;
+  closeEditGenreModal() {
+    this.editGenreModalOpen = false;
     this.genreToEdit = undefined;
   }
 
@@ -99,7 +97,7 @@ export class GenresComponent {
 
     options.push({
       label: 'Edit',
-      action: () => this.openEditReviewModal(genre),
+      action: () => this.openEditGenreModal(genre),
       class: 'text-gray-600',
       iconHover: 'group-hover:text-gray-800',
       icon: DropdownIcon.Edit
