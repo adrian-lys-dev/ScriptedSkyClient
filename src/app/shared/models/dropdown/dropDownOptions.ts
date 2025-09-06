@@ -2,7 +2,8 @@ export enum DropdownIcon {
   Eye = 'eye',
   Trash = 'trash',
   Check = 'check',
-  Done = 'done'
+  Done = 'done',
+  Edit = 'edit'
 }
 
 export type DropdownOption = {

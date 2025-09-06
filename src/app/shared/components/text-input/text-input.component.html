@@ -30,6 +30,11 @@
                 {{ label }} must be at least {{ control.getError('minlength').requiredLength }} characters
             </p>
         }
+        @if (control.hasError('maxlength')) {
+            <p class="mt-1 text-xs text-red-600 font-medium">
+                {{ label }} must be at most {{ control.getError('maxlength').requiredLength }} characters
+            </p>
+        }
         @if (control.hasError('pattern')) {
             <p class="mt-1 text-xs text-red-600 font-medium">
                 {{ label }} is invalid, need at least one numeric character
