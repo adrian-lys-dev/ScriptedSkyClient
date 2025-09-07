@@ -1,0 +1,106 @@
+@if (busyService.loading && publishers == null || publishers == null) {
+    <app-loading-admin></app-loading-admin>
+}
+
+@if(publishers) {
+  @if (busyService.loading) {
+    <app-loading-admin></app-loading-admin>
+  }
+  @else {
+    <div class="overflow-x-auto shadow-md rounded-lg border border-gray-200">
+      <table class="min-w-full border-collapse table-auto">
+
+        <!-- Header -->
+        <thead class="bg-gray-100 text-sm font-medium text-gray-600 uppercase">
+          <tr>
+            <th class="px-4 py-3 whitespace-nowrap">
+              <div class="flex items-center gap-0.5">
+                <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961" />
+                </svg>
+                Id
+              </div>
+            </th>
+            <th class="px-4 py-3 whitespace-nowrap">
+              <div class="flex items-center gap-0.5">
+                <svg class="w-5 h-5 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
+                </svg>
+                Name
+              </div>
+            </th>
+            <th class="px-4 py-3 whitespace-nowrap">
+              <div class="flex items-center gap-0.5">
+                <svg class="w-5 h-5 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
+                </svg>
+                Created At
+              </div>
+            </th>
+            <th class="px-4 py-3 whitespace-nowrap">
+              <div class="flex items-center gap-0.5">
+                <svg class="w-5 h-5 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
+                </svg>
+                Updated At
+              </div>
+            </th>
+            <th class="px-4 py-3 whitespace-nowrap">
+              <button type="button"
+                (click)="openCreatePublisherModal()"
+                class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-900 cursor-pointer">
+                <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Add New Publishers
+              </button>
+            </th>
+
+          </tr>
+        </thead>
+
+        <!-- Rows -->
+        <tbody class="text-sm divide-y divide-gray-200">
+          @for (publisher of publishers.data; track publisher.id) {
+            <tr class="bg-white hover:bg-gray-50 transition-colors">
+              <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{{publisher.id}}</td>
+              <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{{publisher.name}}</td>
+              <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{{publisher.createdAt | date:'dd.MM.yyyy'}}</td>
+              <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{{publisher.updatedAt | date:'dd.MM.yyyy'}}</td>
+              <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                <app-dropdown [options]="getDropDownOptions(publisher)" label="Actions"></app-dropdown>
+              </td>
+            </tr>  
+          }
+
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="flex justify-center mt-4">
+      <mat-paginator (page)="handlePageEvent($event)" [length]="publishers.count" [pageSize]="paginationParams.PageSize"
+        [showFirstLastButtons]="true" [pageIndex]="paginationParams.PageNumber - 1" aria-label="Select page"
+        hidePageSize="true">
+      </mat-paginator>
+    </div>
+  }
+
+}
+
+@if (createPublisherModalOpen) {
+    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4" (click)="closeCreatePublisherModal()">
+        <app-add-publisher (close)="closeCreatePublisherModal()" (saved)="onCreatePublisherSaved($event)"
+            (click)="$event.stopPropagation()"></app-add-publisher>
+    </div>
+}
+
+@if (editPublisherModalOpen) {
+    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4" (click)="closeEditPublisherModal()">
+        <app-update-publisher [publisher]="publisherToEdit" (close)="closeEditPublisherModal()" (saved)="onEditPublisherSaved($event)"
+            (click)="$event.stopPropagation()"></app-update-publisher>
+    </div>
+}
+

@@ -6,7 +6,7 @@ import { UsersComponent } from "./users/users.component";
 import { BooksComponent } from "./entities-management/books/books.component";
 import { AuthorsComponent } from "./entities-management/authors/authors.component";
 import { GenresComponent } from "./entities-management/genres/genres.component";
-import { PubslihersComponent } from "./entities-management/pubslihers/pubslihers.component";
+import { PublishersComponent } from "./entities-management/publishers/publishers.component";
 import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
 
 export const adminRoutes: Route[] = [
@@ -17,5 +17,5 @@ export const adminRoutes: Route[] = [
     { path: 'books', component: BooksComponent, canActivate: [adminGuard] },
     { path: 'authors', component: AuthorsComponent, canActivate: [adminGuard] },
     { path: 'genres', component: GenresComponent, canActivate: [adminGuard] },
-    { path: 'publishers', component: PubslihersComponent, canActivate: [adminGuard] }
+    { path: 'publishers', component: PublishersComponent, canActivate: [adminGuard] }
 ]
