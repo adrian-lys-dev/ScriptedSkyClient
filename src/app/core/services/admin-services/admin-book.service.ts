@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginationParams } from '../../../shared/models/pagination/paginationParams';
 import { Pagination } from '../../../shared/models/pagination/pagination';
 import { AdminBook } from '../../../shared/models/admin-book/adminBook';
+import { BookDetails } from '../../../shared/models/admin-book/book-details';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class AdminBookService {
     params = params.append('pageIndex', paginationParams.PageNumber);
 
     return this.http.get<Pagination<AdminBook>>(this.baseUrl + 'adminbook', { params });
+  }
+
+  getBookById(id: number){
+    return this.http.get<BookDetails>(this.baseUrl + 'adminbook/' + id);
   }
 
   createBook(book: FormData) {

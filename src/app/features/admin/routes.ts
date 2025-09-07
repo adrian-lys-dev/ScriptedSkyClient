@@ -10,6 +10,7 @@ import { PublishersComponent } from "./entities-management/publishers/publishers
 import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
 import { AddBookComponent } from "./entities-management/books/add-book/add-book.component";
 import { UpdateBookComponent } from "./entities-management/books/update-book/update-book.component";
+import { BookDetailsComponent } from "./entities-management/books/book-details/book-details.component";
 
 export const adminRoutes: Route[] = [
     { path: '', component: AdminComponent, canActivate: [adminGuard] },
@@ -19,6 +20,7 @@ export const adminRoutes: Route[] = [
     { path: 'books', component: BooksComponent, canActivate: [adminGuard] },
     { path: 'books/add-book', component: AddBookComponent, canActivate: [adminGuard] },
     { path: 'books/update-book/:id', component: UpdateBookComponent, canActivate: [adminGuard] },
+    { path: 'books/:id', component: BookDetailsComponent, canActivate: [adminGuard] },
     { path: 'authors', component: AuthorsComponent, canActivate: [adminGuard] },
     { path: 'genres', component: GenresComponent, canActivate: [adminGuard] },
     { path: 'publishers', component: PublishersComponent, canActivate: [adminGuard] }

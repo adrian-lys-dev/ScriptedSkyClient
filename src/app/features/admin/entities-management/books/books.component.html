@@ -114,7 +114,7 @@
               <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                 <div class="flex flex-wrap gap-2">
                   @for (author of book.authorNames.split(','); track $index) {
-                    <span class="px-2 py-1 text-sm rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 cursor-pointer">
+                    <span class="bg-green-100 text-green-800 text-md font-medium px-2.5 py-0.5 rounded">
                       {{ author.trim() }}
                     </span>
                   }
@@ -123,14 +123,14 @@
               <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                 <div class="flex flex-wrap gap-2">
                   @for (genre of book.genreNames.split(','); track $index) {
-                    <span class="px-2 py-1 text-sm rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 cursor-pointer">
+                    <span class="bg-blue-100 text-blue-800 text-md font-medium px-2.5 py-0.5 rounded">
                       {{ genre.trim() }}
                     </span>
                   }
                 </div>
               </td>
               <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
-                <span class="px-2 py-1 text-sm rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 cursor-pointer">
+                <span class="bg-orange-100 text-orange-800 text-xd font-medium px-2.5 py-0.5 rounded">
                   {{book.publisherName}}
                 </span>      
               </td>

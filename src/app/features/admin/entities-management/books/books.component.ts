@@ -48,6 +48,13 @@ export class BooksComponent implements OnInit {
     const options: DropdownOption[] = [];
 
     options.push({
+      label: 'Details',
+      action: () => this.bookDetails(book),
+      class: 'text-gray-600',
+      iconHover: 'group-hover:text-gray-800',
+      icon: DropdownIcon.Eye
+    });
+    options.push({
       label: 'Edit',
       action: () => this.editBook(book),
       class: 'text-gray-600',
@@ -63,6 +70,10 @@ export class BooksComponent implements OnInit {
     });
 
     return options;
+  }
+
+  bookDetails(book: AdminBook){
+    this.router.navigate(['/admin/books', book.id]);
   }
 
   editBook(book: AdminBook) {
