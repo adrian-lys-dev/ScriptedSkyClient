@@ -8,6 +8,8 @@ import { AuthorsComponent } from "./entities-management/authors/authors.componen
 import { GenresComponent } from "./entities-management/genres/genres.component";
 import { PublishersComponent } from "./entities-management/publishers/publishers.component";
 import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
+import { AddBookComponent } from "./entities-management/books/add-book/add-book.component";
+import { UpdateBookComponent } from "./entities-management/books/update-book/update-book.component";
 
 export const adminRoutes: Route[] = [
     { path: '', component: AdminComponent, canActivate: [adminGuard] },
@@ -15,6 +17,8 @@ export const adminRoutes: Route[] = [
     { path: 'orders/order/:id', component: OrderDetailsComponent, canActivate: [adminGuard] },
     { path: 'users', component: UsersComponent, canActivate: [adminGuard] },
     { path: 'books', component: BooksComponent, canActivate: [adminGuard] },
+    { path: 'books/add-book', component: AddBookComponent, canActivate: [adminGuard] },
+    { path: 'books/update-book/:id', component: UpdateBookComponent, canActivate: [adminGuard] },
     { path: 'authors', component: AuthorsComponent, canActivate: [adminGuard] },
     { path: 'genres', component: GenresComponent, canActivate: [adminGuard] },
     { path: 'publishers', component: PublishersComponent, canActivate: [adminGuard] }

@@ -1,0 +1,40 @@
+<div class="multi-select-container w-full relative mb-4">
+  <div class="border rounded-lg p-2 flex flex-wrap items-center gap-1 cursor-pointer"
+       [class.border-red-500]="control.touched && control.invalid"
+       (click)="toggleDropdown()">
+
+       @for (option of selectedOptions; track $index){
+        <span class="flex items-center bg-gray-400 text-white px-2 py-1 rounded-full text-sm">
+          {{ option.name }}
+          <button type="button" (click)="removeOption(option); $event.stopPropagation()" class="ml-1 font-bold">&times;</button>
+        </span>
+       }
+
+    @if (selectedOptions.length === 0) {
+      <span [ngClass]="{'text-red-600 peer-focus:text-red-600': control.invalid && (control.touched || control.dirty)}"
+            class="text-sm p-1">
+        {{ placeholder }}
+      </span>
+    }
+  </div>
+
+  @if(dropdownOpen) {
+    <div class="absolute z-10 w-full bg-white border rounded-lg mt-1 max-h-48 overflow-auto shadow-lg">
+      @for (option of options; track $index) {
+        <div (click)="selectOption(option)"
+            class="px-2 py-1 cursor-pointer hover:bg-gray-200 flex justify-between items-center"
+            [class.bg-gray-300]="isSelected(option)">
+          {{ option.name }}
+          <span *ngIf="isSelected(option)">✔</span>
+        </div>        
+      }
+    </div>    
+  }
+
+  @if (control.touched || control.dirty){
+    @if (control.hasError('required')) {
+      <p class="mt-1 text-xs text-red-600 font-medium">Please select at least one option.</p>
+    }    
+  }
+
+</div>

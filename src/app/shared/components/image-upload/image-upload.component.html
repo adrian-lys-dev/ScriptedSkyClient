@@ -1,0 +1,31 @@
+<div class="file-input-container w-full">
+  <label
+    class="flex flex-col items-center justify-center border-2 border-dashed p-4 rounded-lg cursor-pointer hover:border-gray-400">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden>
+
+    @if(!file) {
+      <span>{{ placeholder }}</span>      
+    } @else {
+      <span class="flex items-center gap-2 text-sm bg-gray-200 px-2 py-1 rounded-full">
+        {{ file.name }}
+        <button type="button" (click)="removeFile($event)" class="ml-2 text-red-600 font-bold">&times;</button>
+      </span>      
+    }
+
+    @if(previewUrl) {
+      <div class="mt-2">
+        <img [src]="previewUrl" alt="Preview" class="max-w-full max-h-90 rounded-lg border" />
+      </div>
+    }
+
+  </label>
+
+  @if(control.touched || control.dirty) {
+    <p class="mt-1">
+      <span *ngIf="control.hasError('required')" class="text-red-600 text-xs">File is required.</span>
+      <span *ngIf="control.hasError('invalidExtension')" class="text-red-600 text-xs">Invalid file type.</span>
+      <span *ngIf="control.hasError('invalidSize')" class="text-red-600 text-xs">File size exceeds limit.</span>
+    </p>
+  }
+
+</div>
