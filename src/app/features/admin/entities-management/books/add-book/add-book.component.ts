@@ -87,7 +87,7 @@ export class AddBookComponent implements OnInit {
 
     this.adminBookService.createBook(formData).subscribe({
       next: () => {
-        this.snackbar.success('Genre updated successfully!');
+        this.snackbar.success('Book created successfully!');
         this.router.navigate(['/admin/books']);
       },
       error: (error) => {
