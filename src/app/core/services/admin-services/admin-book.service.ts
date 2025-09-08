@@ -30,6 +30,10 @@ export class AdminBookService {
     return this.http.post(this.baseUrl + 'adminbook', book);
   }
 
+  updateBook(book: FormData, id: number) {
+    return this.http.put(this.baseUrl + 'adminbook/' + id, book);
+  }
+
   deleteBook(id: number) {
     return this.http.delete(this.baseUrl + 'adminbook/' + id);
   }

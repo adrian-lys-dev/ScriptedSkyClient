@@ -1,7 +1,7 @@
 import { AbstractControl } from "@angular/forms";
 
 export class PictureValidator {
-    
+
     static fileSizeValidator(maxSize: number) {
         return (control: AbstractControl): { [key: string]: any } | null => {
             if (control.value) {
@@ -23,6 +23,15 @@ export class PictureValidator {
                 }
             }
             return null;
+        };
+    }
+
+    static requiredWithExisting(existingImageUrl?: string) {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            const file = control.value;
+            if (file) return null;
+            if (existingImageUrl) return null;
+            return { required: true };
         };
     }
 

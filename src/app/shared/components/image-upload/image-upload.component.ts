@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, Self } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Self } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NgControl } from '@angular/forms';
 
 @Component({
@@ -8,9 +8,10 @@ import { ControlValueAccessor, FormControl, FormGroup, NgControl } from '@angula
   templateUrl: './image-upload.component.html',
   styleUrl: './image-upload.component.scss'
 })
-export class ImageUploadComponent implements ControlValueAccessor {
+export class ImageUploadComponent implements ControlValueAccessor, OnInit  {
 
   @Input() placeholder = 'Upload an image';
+  @Input() initialImageUrl: string | null = null;
 
   file: File | null = null;
   previewUrl: string | null = null;
@@ -22,12 +23,17 @@ export class ImageUploadComponent implements ControlValueAccessor {
     this.controlDir.valueAccessor = this;
   }
 
+  ngOnInit() {
+    if (!this.file && this.initialImageUrl) {
+      this.previewUrl = this.initialImageUrl;
+    }
+  }
+
   get control(): FormControl {
     return this.controlDir.control as FormControl;
   }
 
   onFileSelected(event: Event) {
-
     const input = event.target as HTMLInputElement;
 
     if (!input.files?.length) return;
@@ -53,7 +59,7 @@ export class ImageUploadComponent implements ControlValueAccessor {
   removeFile(event: Event) {
     event.stopPropagation();
     this.file = null;
-    this.previewUrl = null;
+    this.previewUrl = this.initialImageUrl;
     this.onChange(null);
     this.onTouched();
   }
