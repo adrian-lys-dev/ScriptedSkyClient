@@ -23,5 +23,15 @@ export const QUOTES: Quote[] = [
   { text: "Great things never come from comfort zones.", author: "Unknown" },
   { text: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
   { text: "Success doesn’t just find you. You have to go out and get it.", author: "Unknown" },
-  { text: "Don’t stop when you’re tired. Stop when you’re done.", author: "Unknown" }
+  { text: "Don’t stop when you’re tired. Stop when you’re done.", author: "Unknown" },
+  { text: "Hardships often prepare ordinary people for an extraordinary destiny.", author: "C.S. Lewis" },
+  { text: "Your limitation—it’s only your imagination.", author: "Unknown" },
+  { text: "Sometimes later becomes never. Do it now.", author: "Unknown" },
+  { text: "Don’t wait for opportunity. Create it.", author: "Unknown" },
+  { text: "Little things make big days.", author: "Unknown" },
+  { text: "It always seems impossible until it’s done.", author: "Nelson Mandela" },
+  { text: "Failure is simply the opportunity to begin again, this time more intelligently.", author: "Henry Ford" },
+  { text: "If you can dream it, you can do it.", author: "Walt Disney" },
+  { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
+  { text: "Well done is better than well said.", author: "Benjamin Franklin" }
 ];
