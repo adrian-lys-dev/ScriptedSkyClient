@@ -16,6 +16,7 @@ import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } fro
 export class TextInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() type = 'text';
+  @Input() formType: 'input' | 'textarea' = 'input';
   @Input() backgroundColor: string = 'rgba(240,245,249,255)';
 
   constructor(@Self() public controlDir: NgControl) {

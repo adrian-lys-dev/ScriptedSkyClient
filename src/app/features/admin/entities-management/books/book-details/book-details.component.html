@@ -1,0 +1,106 @@
+@if (busyService.loading && book == null || book == null) {
+    <app-loading-admin></app-loading-admin>
+}
+
+@if (book) {
+  <div class="mx-auto">
+    <div class="overflow-x-auto rounded-lg shadow">
+      <table class="w-full text-sm text-left text-gray-500">
+        <tbody class="divide-y divide-gray-200">
+
+          <tr class="bg-gray-50">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Title</th>
+            <td class="px-6 py-4">{{ book.title }}</td>
+          </tr>
+
+          <tr class="bg-white">
+            <th scope="row" class="align-top px-6 py-4 font-medium text-gray-900">Description</th>
+            <td class="px-6 py-4">
+              <p class="whitespace-pre-line">{{ book.description }}</p>
+            </td>
+          </tr>
+
+          <tr class="bg-gray-50">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">ID</th>
+            <td class="px-6 py-4">{{ book.id }}</td>
+          </tr>
+
+          <tr class="bg-white">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">ISBN</th>
+            <td class="px-6 py-4">{{ book.isbn }}</td>
+          </tr>
+
+          <tr class="bg-gray-50">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Release year</th>
+            <td class="px-6 py-4">{{ book.releaseYear }}</td>
+          </tr>
+
+          <tr class="bg-white">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Pages</th>
+            <td class="px-6 py-4">{{ book.pageNumber }}</td>
+          </tr>
+
+          <tr class="bg-gray-50">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Rating</th>
+            <td class="px-6 py-4">{{ book.rating }}</td>
+          </tr>
+
+          <tr class="bg-white">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Price</th>
+            <td class="px-6 py-4">{{ book.price }} ₴</td>
+          </tr>
+
+          <tr class="bg-gray-50">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">In stock</th>
+            <td class="px-6 py-4">{{ book.quantityInStock }}</td>
+          </tr>
+
+          <tr class="bg-white">
+            <th scope="row" class="align-top px-6 py-4 font-medium text-gray-900">Genres</th>
+            <td class="px-6 py-4">
+              <div class="flex flex-wrap gap-2">
+                @for (g of book.genre; track g.id) {
+                  <span class="bg-blue-100 text-blue-800 text-md font-medium px-2.5 py-0.5 rounded">
+                    {{ g.name }}
+                  </span>
+                }
+              </div>
+            </td>
+          </tr>
+
+          <tr class="bg-gray-50">
+            <th scope="row" class="align-top px-6 py-4 font-medium text-gray-900">Authors</th>
+            <td class="px-6 py-4">
+              <div class="flex flex-wrap gap-2">
+                @for (a of book.author; track a.id) {
+                  <span class="bg-green-100 text-green-800 text-md font-medium px-2.5 py-0.5 rounded">
+                    {{ a.name }}
+                  </span>
+                }
+              </div>
+            </td>
+          </tr>
+
+          <tr class="bg-white">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Publisher</th>
+            <td class="px-6 py-4">
+              <span class="bg-orange-100 text-orange-800 text-md font-medium px-2.5 py-0.5 rounded">
+                {{ book.publisher.name }}
+              </span>
+            </td>
+          </tr>
+
+          <tr class="bg-gray-50">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Created at</th>
+            <td class="px-6 py-4">{{ book.createdAt | date:'dd.MM.yyyy'}}</td>
+          </tr>
+
+          <tr class="bg-white">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900">Updated at</th>
+            <td class="px-6 py-4">{{ book.updatedAt | date:'dd.MM.yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+}

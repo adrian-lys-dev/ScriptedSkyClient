@@ -1,0 +1,34 @@
+<div class="single-select-container w-full relative mb-4">
+  <div class="border rounded-lg p-2 flex items-center justify-between cursor-pointer"
+       [class.border-red-500]="control.touched && control.invalid"
+       (click)="toggleDropdown()">
+    @if(!selectedOption){
+      <span [ngClass]="{'text-red-600 peer-focus:text-red-600': control.invalid && (control.touched || control.dirty)}"
+        class="text-sm">{{ placeholder }}</span>
+    } @else {
+      <span class="text-sm bg-gray-400 text-white px-2 py-1 rounded-full">
+        {{ selectedOption.name }}
+      </span>      
+    }
+
+    <span class="ml-2">&#9662;</span>
+  </div>
+
+  @if(dropdownOpen) {
+    <div class="absolute z-10 w-full bg-white border rounded-lg mt-1 max-h-48 overflow-auto shadow-lg">
+      @for(option of options; track $index){
+        <div (click)="selectOption(option)"
+             class="px-2 py-1 cursor-pointer hover:bg-gray-200"
+             [class.bg-gray-300]="isSelected(option)">
+          {{ option.name }}
+        </div>
+      }
+    </div>
+  }
+
+  @if (control.touched || control.dirty) {
+    @if(control.hasError('required')) {
+      <p class="mt-1 text-xs text-red-600 font-medium">Please select an option.</p>
+    }
+  }
+</div>

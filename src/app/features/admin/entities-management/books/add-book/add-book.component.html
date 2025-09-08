@@ -1,0 +1,34 @@
+@if (busyService.loading) {
+    <app-loading-admin></app-loading-admin>
+} @else {
+    <div class="p-4 border-2 border-gray-200 rounded-lg bg-white shadow-sm">
+        <div class="all-product-subtitle text-xl">Add New Book</div>
+        <form class="mb-2" [formGroup]="bookForm" (ngSubmit)="submitBook()">
+            <app-text-input label="Title" formControlName="title" backgroundColor="white" />
+            <app-text-input label="Description" formControlName="description" formType="textarea" backgroundColor="white" />    
+            <app-text-input label="Release Year" formControlName="releaseYear" backgroundColor="white" type="number"/>
+            <app-text-input label="Page Number" formControlName="pageNumber" backgroundColor="white" type="number"/>
+            <app-text-input label="Price" formControlName="price" backgroundColor="white" type="number"/>
+            <app-text-input label="ISBN" formControlName="isbn" backgroundColor="white"/>
+            <app-text-input label="Qantity In Stock" formControlName="quantityInStock" backgroundColor="white"/>
+            <app-multi-select formControlName="genresIds" [options]="genres" [placeholder]="'Select genres'"></app-multi-select>
+            <app-multi-select formControlName="authorsIds" [options]="authors" [placeholder]="'Select authors'"></app-multi-select>
+            <app-single-select formControlName="publisherId" [options]="publishers" [placeholder]="'Select publisher'"></app-single-select>
+            <app-image-upload formControlName="picture" [placeholder]="'Upload book cover'"></app-image-upload>
+
+
+            <div class="flex justify-end mt-2">
+                <button type="submit" [disabled]="!bookForm.valid"
+                    class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-900 cursor-pointer">
+                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Add New Book
+                </button>
+            </div>
+
+        </form>
+    </div>    
+}
+

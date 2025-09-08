@@ -1,0 +1,26 @@
+<div class="bg-white rounded-lg p-6 max-w-lg w-full shadow-lg min-w-[70vw]">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Add new genre</h2>
+        <button
+            (click)="onCancel()"
+            class="text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none cursor-pointer">&times;</button>
+    </div>
+
+    <form class="mb-2" [formGroup]="genreForm" (ngSubmit)="submitGenre()">
+        <app-text-input label="Name" formControlName="name" backgroundColor="white"/>
+    
+        <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-500 ml-2">{{ nameLength }} / 100</p>
+
+            <button type="submit"
+                [disabled]="!genreForm.valid"
+                class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-900 cursor-pointer">
+                <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Add New Genre
+            </button>
+        </div>
+    </form>
+
+</div>
